@@ -280,25 +280,72 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
 /* RESPONSIVE MOBILE / SMALL TABLET (<= 820px) */
 @media (max-width: 820px) {
   .shell { width: min(100% - 32px, 680px); }
-  .nav-shell { grid-template-columns: 1fr auto; height: 72px; }
+  .nav-shell { grid-template-columns: 1fr auto; height: 68px; }
   .desktop-nav, .desktop-only { display: none; }
   .mobile-menu { display: grid; }
   .mobile-panel { display: grid; padding: 14px 16px 22px; margin: 0 16px; border-radius: 18px; background: rgba(18,22,30,.97); border: 1px solid rgba(255,255,255,.14); gap: 4px; box-shadow: 0 20px 50px rgba(0,0,0,.35); }
   .mobile-panel a, .mobile-panel button { color: white; text-align: left; padding: 14px 16px; min-height: 48px; border: 0; border-radius: 10px; background: transparent; font-size: 14px; display: flex; align-items: center; }
   .mobile-panel button { background: var(--lime); color: var(--ink); font-weight: 750; justify-content: center; text-align: center; margin-top: 8px; }
-  .hero { min-height: auto; padding-top: 72px; }
-  .hero-grid { grid-template-columns: 1fr; min-height: auto; padding-top: 70px; gap: 40px; }
-  .hero-copy { max-width: 620px; }
-  .hero h1 { font-size: clamp(48px, 12vw, 72px); }
-  .hero-pagination { position: static; margin-top: 32px; }
-  .hero-visual { height: 580px; width: 100%; max-width: 480px; transform: none; margin: 0 auto; }
-  .phone-shell { left: 50%; transform: translateX(-50%) rotateY(-6deg) rotateZ(3deg); }
-  .qr-card { left: 10px; bottom: 120px; }
-  .nfc-card { right: 8px; top: 120px; }
-  .ai-card { right: 12px; bottom: 75px; }
+
+  /* HERO MOBILE: composición vertical */
+  .hero { min-height: auto; padding-top: 68px; overflow: hidden; }
+  .hero-grid {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: 48px;
+    padding-bottom: 40px;
+    gap: 36px;
+    align-items: start;
+  }
+  .hero-copy { max-width: 100%; }
+  .eyebrow { margin-bottom: 18px; }
+  .hero h1 { font-size: clamp(44px, 11vw, 68px); }
+  .hero-copy > .hero-title-wrap > p { font-size: 15px; max-width: 480px; margin-top: 20px; }
+  .hero-actions { margin-top: 26px; gap: 10px; }
+  .hero-proof { margin-top: 22px; }
+  .hero-pagination { position: static; margin-top: 28px; }
+
+  /* VISUAL: centrado, proporcional, sin overflow */
+  .hero-visual {
+    width: 100%;
+    max-width: 420px;
+    height: 500px;
+    transform: none;
+    margin: 0 auto;
+    position: relative;
+  }
+  .visual-glow {
+    width: 300px;
+    height: 300px;
+    top: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .phone-shell {
+    width: min(260px, 72vw);
+    height: 460px;
+    left: 50%;
+    top: 20px;
+    transform: translateX(-50%) rotateY(-5deg) rotateZ(2deg);
+    padding: 8px;
+  }
+  .phone-screen { padding: 72px 18px 22px; }
+  .mini-card-title { font-size: 24px; margin-top: 10px; }
+  .mini-review { margin-top: 28px; padding: 10px 12px; }
+
+  /* Tarjetas flotantes: rodean el teléfono, sin salirse del visual */
+  .qr-card { left: 0; bottom: 110px; padding: 8px 10px; }
+  .qr-visual { width: 46px; height: 46px; }
+  .nfc-card { right: 0; top: 100px; padding: 8px 10px; }
+  .ai-card { right: 4px; bottom: 60px; padding: 8px 10px; }
+  .float-card strong { font-size: 12px; }
+  .float-card small { font-size: 11px; }
+  .nfc-pulse, .ai-dot { width: 38px; height: 38px; }
+
+  /* STRIP */
   .hero-strip { margin-top: 0; }
-  .strip-grid { grid-template-columns: repeat(2,1fr); padding: 18px 0; }
-  .strip-grid > div { border-left: 0; padding: 16px 12px; }
+  .strip-grid { grid-template-columns: repeat(2,1fr); padding: 16px 0; }
+  .strip-grid > div { border-left: 0; padding: 14px 12px; }
   .config-section, .services-section, .inside-section, .process-section, .cases-section, .contact-section { padding: 90px 0; }
   .config-grid, .inside-grid, .contact-grid { grid-template-columns: 1fr; gap: 50px; }
   .split-heading { grid-template-columns: 1fr; gap: 24px; }
@@ -427,68 +474,62 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
 @media (max-width: 560px) {
   .shell { width: calc(100% - 32px); }
   .config-section, .services-section, .inside-section, .process-section, .cases-section, .contact-section { padding: 75px 0; }
-  .hero-grid { padding-top: 55px; }
-  .eyebrow { margin-bottom: 16px; }
-  .hero h1 { font-size: clamp(42px, 13vw, 58px); }
-  .hero-copy > .hero-title-wrap > p { font-size: 15px; }
-  .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; }
-  .hero-actions .btn { width: 100%; min-height: 48px; }
-  .hero-proof { margin-top: 24px; }
-  .hero-pagination { margin-top: 24px; }
+
+  /* HERO SMARTPHONE */
+  .hero { padding-top: 68px; }
+  .hero-grid { padding-top: 36px; padding-bottom: 32px; gap: 28px; }
+  .eyebrow { margin-bottom: 14px; font-size: 11px; }
+  .hero h1 { font-size: clamp(40px, 12.5vw, 56px); }
+  .hero-copy > .hero-title-wrap > p { font-size: 14.5px; margin-top: 16px; max-width: 100%; }
+  .hero-actions { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 22px; }
+  .hero-actions .btn { width: 100%; min-height: 50px; font-size: 14px; }
+  .hero-proof { margin-top: 20px; }
+  .hero-pagination { margin-top: 20px; }
   .hero-pagination button { width: 44px; height: 36px; padding: 16px 0; }
-  
-  /* Mobile visual sin overflows ni coordenadas negativas */
+
+  /* VISUAL SMARTPHONE: proporcional, centrado, sin desbordamiento */
   .hero-visual {
     width: 100%;
-    max-width: 360px;
-    height: 520px;
+    max-width: 340px;
+    height: 460px;
     margin: 0 auto;
     position: relative;
     transform: none;
-    translate: none;
+  }
+  .visual-glow {
+    width: 240px;
+    height: 240px;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .phone-shell {
-    width: min(280px, 80vw);
-    height: 490px;
+    width: min(240px, 66vw);
+    height: 420px;
     left: 50%;
-    transform: translateX(-50%) rotateY(-4deg) rotateZ(2deg);
-    padding: 8px;
+    top: 18px;
+    transform: translateX(-50%) rotateY(-3deg) rotateZ(1.5deg);
+    padding: 7px;
   }
-  .phone-screen {
-    padding: 60px 18px 24px;
-  }
-  .mini-card-title {
-    font-size: 24px;
-    margin-top: 10px;
-  }
-  .mini-review {
-    margin-top: 30px;
-    padding: 10px 12px;
-  }
-  .qr-card {
-    left: 2px;
-    bottom: 95px;
-    padding: 8px 10px;
-  }
-  .qr-visual {
-    width: 44px;
-    height: 44px;
-  }
-  .nfc-card {
-    right: 2px;
-    top: 75px;
-    padding: 8px 10px;
-  }
-  .ai-card {
-    right: 4px;
-    bottom: 40px;
-    padding: 8px 10px;
-  }
-  .nfc-pulse, .ai-dot {
-    width: 36px;
-    height: 36px;
-  }
+  .phone-screen { padding: 58px 15px 18px; }
+  .mini-card-title { font-size: 21px; margin-top: 8px; }
+  .mini-review { margin-top: 22px; padding: 9px 10px; gap: 8px; }
+  .mini-review strong { font-size: 12px; }
+  .mini-review small { font-size: 11px; }
+  .mini-flow { font-size: 11px; margin-top: 10px; }
+  .mini-flow span { padding: 5px 7px; }
 
+  /* Tarjetas flotantes: a los lados del teléfono */
+  .float-card { padding: 7px 9px; gap: 7px; border-radius: 13px; }
+  .float-card strong { font-size: 11.5px; }
+  .float-card small { font-size: 10.5px; }
+  .qr-card { left: 0; bottom: 90px; }
+  .qr-visual { width: 38px; height: 38px; }
+  .nfc-card { right: 0; top: 70px; }
+  .ai-card { right: 2px; bottom: 36px; }
+  .nfc-pulse, .ai-dot { width: 32px; height: 32px; }
+
+  /* STRIP */
   .strip-grid { padding: 12px 0; }
   .strip-grid strong { font-size: 15px; }
   .strip-grid span { font-size: 11px; }
