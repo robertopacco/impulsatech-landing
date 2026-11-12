@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type IconName =
   | "spark"
@@ -121,6 +121,62 @@ export default function Home() {
   const [business, setBusiness] = useState(businessTypes[0]);
   const [goal, setGoal] = useState(goals[0]);
   const [submitted, setSubmitted] = useState(false);
+  const [serviceIndex, setServiceIndex] = useState(0);
+  const servicesRef = useRef<HTMLDivElement>(null);
+
+  const updateCarouselState = () => {
+    const el = servicesRef.current;
+    if (!el) return;
+
+    const cards = Array.from(el.children) as HTMLElement[];
+    if (cards.length === 0) return;
+
+    // Detectar card más cercana al CENTRO del viewport del track
+    const containerCenter = el.scrollLeft + el.clientWidth / 2;
+
+    let closestIdx = 0;
+    let minDiff = Infinity;
+    cards.forEach((card, idx) => {
+      const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+      const diff = Math.abs(cardCenter - containerCenter);
+      if (diff < minDiff) {
+        minDiff = diff;
+        closestIdx = idx;
+      }
+    });
+
+    setServiceIndex(closestIdx);
+  };
+
+  const scrollToService = (index: number) => {
+    const el = servicesRef.current;
+    if (!el) return;
+    const cards = Array.from(el.children) as HTMLElement[];
+    const targetCard = cards[index];
+    if (!targetCard) return;
+
+    // Centrar la card en el viewport del track
+    const targetScrollLeft =
+      targetCard.offsetLeft + targetCard.offsetWidth / 2 - el.clientWidth / 2;
+
+    el.scrollTo({
+      left: Math.max(0, targetScrollLeft),
+      behavior: "smooth",
+    });
+  };
+
+  const scrollService = (direction: "left" | "right") => {
+    const nextIdx = direction === "right"
+      ? Math.min(serviceIndex + 1, services.length - 1)
+      : Math.max(serviceIndex - 1, 0);
+    scrollToService(nextIdx);
+  };
+
+  useEffect(() => {
+    updateCarouselState();
+    window.addEventListener("resize", updateCarouselState);
+    return () => window.removeEventListener("resize", updateCarouselState);
+  }, []);
 
   useEffect(() => {
     const id = window.setInterval(() => setHeroIndex((i) => (i + 1) % heroModes.length), 5000);
@@ -250,16 +306,61 @@ export default function Home() {
             <div><div className="kicker">SOLUCIONES</div><h2>Tu negocio.<br/><span>También lo impulsamos.</span></h2></div>
             <p>No vendemos tecnología por venderla. Elegimos la combinación que reduce fricción, mejora tu presencia y acerca al cliente a una acción concreta.</p>
           </div>
-          <div className="services-track">
+          <div className="services-carousel-wrapper">
+            <div className="services-nav-controls" aria-label="Controles del carrusel">
+              <button
+                type="button"
+                className={`service-nav-btn nav-btn-left${serviceIndex === 0 ? " is-disabled" : ""}`}
+                aria-label="Servicio anterior"
+                aria-disabled={serviceIndex === 0}
+                disabled={serviceIndex === 0}
+                onClick={() => scrollService("left")}
+              >
+                <Icon name="chevron" size={20} />
+              </button>
+              <button
+                type="button"
+                className={`service-nav-btn nav-btn-right${serviceIndex === services.length - 1 ? " is-disabled" : ""}`}
+                aria-label="Siguiente servicio"
+                aria-disabled={serviceIndex === services.length - 1}
+                disabled={serviceIndex === services.length - 1}
+                onClick={() => scrollService("right")}
+              >
+                <Icon name="chevron" size={20} />
+              </button>
+            </div>
+
+            <div
+              className="services-track"
+              ref={servicesRef}
+              onScroll={updateCarouselState}
+            >
+              {services.map((service, index) => (
+                <article className="service-card" key={service.title}>
+                  <div className="service-number">0{index + 1}</div>
+                  <div className="service-icon"><Icon name={service.icon} size={26}/></div>
+                  <h3>{service.title}</h3>
+                  <p>{service.text}</p>
+                  <span className="service-tag">{service.tag}</span>
+                  <button onClick={() => scrollTo("contacto")}>Explorar <Icon name="chevron" size={15}/></button>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="services-dots" role="tablist" aria-label="Indicadores de servicios">
             {services.map((service, index) => (
-              <article className="service-card" key={service.title}>
-                <div className="service-number">0{index + 1}</div>
-                <div className="service-icon"><Icon name={service.icon} size={26}/></div>
-                <h3>{service.title}</h3>
-                <p>{service.text}</p>
-                <span className="service-tag">{service.tag}</span>
-                <button onClick={() => scrollTo("contacto")}>Explorar <Icon name="chevron" size={15}/></button>
-              </article>
+              <button
+                key={service.title}
+                type="button"
+                role="tab"
+                aria-selected={index === serviceIndex}
+                className={`services-dot ${index === serviceIndex ? "active" : ""}`}
+                onClick={() => scrollToService(index)}
+                aria-label={`Ir al servicio ${index + 1}: ${service.title}`}
+              >
+                <span />
+              </button>
             ))}
           </div>
         </div>
