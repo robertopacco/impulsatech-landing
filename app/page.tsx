@@ -82,11 +82,66 @@ const heroModes = [
 ];
 
 const services = [
-  { icon: "nfc" as IconName, title: "NFC + QR", text: "Reseñas de Google, menús, catálogos, links y acciones con un toque.", tag: "Rápido de implementar" },
-  { icon: "web" as IconName, title: "Landing & Web", text: "Sitios modernos, rápidos y pensados para convertir visitas en contactos.", tag: "Diseño + conversión" },
-  { icon: "chat" as IconName, title: "WhatsApp", text: "Flujos de atención, mensajes y derivación para responder más rápido.", tag: "Atención comercial" },
-  { icon: "bolt" as IconName, title: "Automatizaciones", text: "Procesos conectados para reducir tareas manuales y errores repetitivos.", tag: "Ahorra tiempo" },
-  { icon: "bot" as IconName, title: "Agentes IA", text: "Asistentes que consultan información, califican leads y apoyan operaciones.", tag: "Escala tu atención" },
+  {
+    icon: "nfc" as IconName,
+    title: "NFC + QR",
+    text: "Reseñas de Google, menús, catálogos, links y acciones con un toque.",
+    tag: "Rápido de implementar",
+    cta: "Quiero más reseñas",
+    waMessage: [
+      "Hola IMPULSATECH",
+      "",
+      "Quisiera más información sobre la solución de NFC + QR para conseguir reseñas en Google.",
+    ].join("\n"),
+  },
+  {
+    icon: "web" as IconName,
+    title: "Landing & Web",
+    text: "Sitios modernos, rápidos y pensados para convertir visitas en contactos.",
+    tag: "Diseño + conversión",
+    cta: "Quiero mi página web",
+    waMessage: [
+      "Hola IMPULSATECH",
+      "",
+      "Quisiera más información sobre el diseño de mi página web o landing page.",
+    ].join("\n"),
+  },
+  {
+    icon: "chat" as IconName,
+    title: "WhatsApp & Chatbots",
+    text: "Flujos de atención, respuestas automáticas y derivación para responder más rápido.",
+    tag: "Atención comercial",
+    cta: "Quiero atención automática",
+    waMessage: [
+      "Hola IMPULSATECH",
+      "",
+      "Quisiera más información sobre atención automática y chatbots por WhatsApp.",
+    ].join("\n"),
+  },
+  {
+    icon: "bolt" as IconName,
+    title: "Automatizaciones",
+    text: "Procesos conectados para reducir tareas manuales y errores repetitivos.",
+    tag: "Ahorra tiempo",
+    cta: "Quiero automatizar mi negocio",
+    waMessage: [
+      "Hola IMPULSATECH",
+      "",
+      "Quisiera más información sobre automatizaciones de procesos para mi negocio.",
+    ].join("\n"),
+  },
+  {
+    icon: "bot" as IconName,
+    title: "Agentes IA",
+    text: "Asistentes que consultan información, califican leads y apoyan operaciones.",
+    tag: "Escala tu atención",
+    cta: "Quiero implementar IA",
+    waMessage: [
+      "Hola IMPULSATECH",
+      "",
+      "Quisiera más información sobre cómo implementar un agente de inteligencia artificial en mi negocio.",
+    ].join("\n"),
+  },
 ];
 
 const businessTypes = [
@@ -162,9 +217,27 @@ const recommendationsByGoal: Record<string, RecommendationInfo> = {
 };
 
 const cases = [
-  { name: "Pastelarte Coffee Cat", category: "NFC para reseñas", metric: "Experiencia en mostrador", glyph: "☕", className: "case-pink" },
-  { name: "Pollería Misky", category: "QR + NFC", metric: "Reseñas desde mesa", glyph: "✦", className: "case-gold" },
-  { name: "Hospedaje", category: "NFC personalizado", metric: "Reputación local", glyph: "⌂", className: "case-blue" },
+  {
+    name: "Pastelarte Coffee Cat",
+    category: "Cafetería en Ica",
+    solution: "Tarjeta NFC para facilitar reseñas en Google.",
+    glyph: "☕",
+    className: "case-pink",
+  },
+  {
+    name: "Pollería Misky",
+    category: "Restaurante en Ica",
+    solution: "QR A4 + NFC para facilitar el acceso a reseñas de Google.",
+    glyph: "✦",
+    className: "case-gold",
+  },
+  {
+    name: "Hospedaje",
+    category: "Hospedaje en Ica",
+    solution: "Tarjeta / banner NFC personalizado para facilitar reseñas de Google.",
+    glyph: "⌂",
+    className: "case-blue",
+  },
 ];
 
 function Brand() {
@@ -232,6 +305,19 @@ function buildFloatingWhatsAppUrl() {
     "Hola IMPULSATECH",
     "",
     "Vi su página web y quisiera conocer más sobre sus soluciones digitales.",
+  ].join("\n");
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+}
+
+function buildServiceWhatsAppUrl(waMessage: string) {
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(waMessage)}`;
+}
+
+function buildCaseWhatsAppUrl(caseName: string) {
+  const message = [
+    "Hola IMPULSATECH",
+    "",
+    `Vi el caso de ${caseName} y quisiera implementar algo similar en mi negocio.`,
   ].join("\n");
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
 }
@@ -449,7 +535,7 @@ export default function Home() {
             <div className="kicker">ELIGE TU OPORTUNIDAD</div>
             <h2>Tu negocio merece<br/><span>otra oportunidad.</span></h2>
             <p>Cuéntanos qué tienes y qué quieres lograr. Te mostramos una ruta inicial sin tecnicismos.</p>
-            <div className="local-chip"><Icon name="pin" size={17}/> Atención para negocios locales y remotos</div>
+            <div className="local-chip"><Icon name="pin" size={17}/> Atención presencial en Ica y atención por WhatsApp para todo el Perú</div>
           </div>
           <div className="config-card">
             <div className="config-stepper-top">
@@ -669,7 +755,16 @@ export default function Home() {
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
                   <span className="service-tag">{service.tag}</span>
-                  <button onClick={() => scrollTo("contacto")}>Explorar <Icon name="chevron" size={15}/></button>
+                  <a
+                    href={buildServiceWhatsAppUrl(service.waMessage)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="service-cta-link"
+                    aria-label={`${service.cta} por WhatsApp`}
+                  >
+                    <span>{service.cta}</span>
+                    <Icon name="arrow" size={15} />
+                  </a>
                 </article>
               ))}
             </div>
@@ -749,15 +844,57 @@ export default function Home() {
         <div className="shell">
           <div className="section-heading split-heading case-heading">
             <div><div className="kicker">CASOS REALES</div><h2>Hecho para negocios<br/><span>de verdad.</span></h2></div>
-            <p>Ejemplos de soluciones aplicadas a negocios locales. La versión final puede mostrar tus fotos y métricas reales.</p>
+            <p>Soluciones aplicadas a negocios locales para facilitar reseñas en Google y conectar con sus clientes.</p>
           </div>
           <div className="cases-grid">
             {cases.map((item) => (
               <article key={item.name} className={`case-card ${item.className}`}>
-                <div className="case-art"><span>{item.glyph}</span><div className="case-phone"><div/><div/><div/></div></div>
-                <div className="case-body"><small>{item.category}</small><h3>{item.name}</h3><p>{item.metric}</p><button onClick={() => scrollTo("contacto")}><Icon name="arrow" size={17}/></button></div>
+                <div className="case-art">
+                  <span>{item.glyph}</span>
+                  <div className="case-phone"><div/><div/><div/></div>
+                </div>
+                <div className="case-body">
+                  <small>{item.category}</small>
+                  <h3>{item.name}</h3>
+                  <p className="case-solution">{item.solution}</p>
+                  <a
+                    href={buildCaseWhatsAppUrl(item.name)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="case-cta-btn"
+                    aria-label={`Quiero algo similar a ${item.name} por WhatsApp`}
+                  >
+                    <span>Quiero algo similar</span>
+                    <Icon name="arrow" size={16} />
+                  </a>
+                </div>
               </article>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="trust-section">
+        <div className="shell">
+          <div className="trust-card">
+            <div className="trust-badge">
+              <Icon name="shield" size={15} /> CONFIANZA LOCAL
+            </div>
+            <h2>Tecnología con atención humana.</h2>
+            <p className="trust-text">
+              IMPULSATECH nace en Ica para ayudar a negocios a aprovechar herramientas digitales de forma simple, práctica y cercana.
+            </p>
+            <div className="trust-location-tag">
+              <Icon name="pin" size={15} />
+              <span>Atención presencial en Ica y atención por WhatsApp para todo el Perú.</span>
+            </div>
+            <div className="trust-signature">
+              <div className="signature-avatar" aria-hidden="true">RP</div>
+              <div>
+                <strong>Roberto Pacco</strong>
+                <span>Fundador · Ingeniero de Sistemas</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -795,11 +932,11 @@ export default function Home() {
             <a href="#como-funciona">Proceso</a>
             <a href="#casos">Casos</a>
             <a href="#contacto">Contacto</a>
-            <a href="https://www.instagram.com/impulsatech.pee/" target="_blank" rel="noreferrer">Instagram</a>
-            <a href="https://www.facebook.com/profile.php?id=61594748236941" target="_blank" rel="noreferrer">Facebook</a>
-            <a href="https://www.tiktok.com/@impulsatech.pe" target="_blank" rel="noreferrer">TikTok</a>
+            <a href="https://www.instagram.com/impulsatech.pee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de IMPULSATECH">Instagram</a>
+            <a href="https://www.facebook.com/profile.php?id=61594748236941" target="_blank" rel="noopener noreferrer" aria-label="Facebook de IMPULSATECH">Facebook</a>
+            <a href="https://www.tiktok.com/@impulsatech.pe" target="_blank" rel="noopener noreferrer" aria-label="TikTok de IMPULSATECH">TikTok</a>
           </div>
-          <div className="footer-note"><span>© 2026 IMPULSATECH</span><span>Ica, Perú · Atención remota</span></div>
+          <div className="footer-note"><span>© 2026 IMPULSATECH</span><span>Atención presencial en Ica y por WhatsApp para todo el Perú</span></div>
         </div>
       </footer>
 
