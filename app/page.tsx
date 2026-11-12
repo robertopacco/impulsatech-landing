@@ -176,6 +176,66 @@ function Brand() {
   );
 }
 
+const WA_PHONE = "51956843409";
+
+function WhatsAppIcon({ size = 24 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden="true"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.886 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.05 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
+    </svg>
+  );
+}
+
+function buildQuoteWhatsAppUrl() {
+  const message = [
+    "Hola IMPULSATECH",
+    "",
+    "Vi su página web y quisiera información y una cotización sobre sus soluciones digitales.",
+  ].join("\n");
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+}
+
+function buildConfigWhatsAppUrl(
+  businessType: string,
+  businessGoal: string,
+  solution: string
+) {
+  const biz = businessType || "mi negocio";
+  const g = businessGoal || "crecer";
+  const sol = solution || "soluciones digitales";
+
+  const message = [
+    "Hola IMPULSATECH",
+    "",
+    `Tengo un negocio de ${biz}.`,
+    "",
+    "Mi objetivo es:",
+    g,
+    "",
+    "La web me recomendó:",
+    sol,
+    "",
+    "Quisiera recibir más información y una cotización.",
+  ].join("\n");
+
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+}
+
+function buildFloatingWhatsAppUrl() {
+  const message = [
+    "Hola IMPULSATECH",
+    "",
+    "Vi su página web y quisiera conocer más sobre sus soluciones digitales.",
+  ].join("\n");
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+}
+
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -293,7 +353,15 @@ export default function Home() {
             <a href="#casos">Casos reales</a>
             <a href="#contacto">Contacto</a>
           </nav>
-          <button className="nav-cta desktop-only" onClick={() => scrollTo("contacto")}>Cotizar proyecto <Icon name="arrow" size={16}/></button>
+          <a
+            href={buildQuoteWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="nav-cta desktop-only"
+            aria-label="Cotizar proyecto por WhatsApp"
+          >
+            Cotizar proyecto <Icon name="arrow" size={16}/>
+          </a>
           <button className="mobile-menu" aria-label="Abrir menú" onClick={() => setMobileOpen((v) => !v)}>
             <Icon name={mobileOpen ? "close" : "menu"} size={23}/>
           </button>
@@ -303,7 +371,16 @@ export default function Home() {
             <a href="#servicios" onClick={() => setMobileOpen(false)}>Servicios</a>
             <a href="#como-funciona" onClick={() => setMobileOpen(false)}>Cómo funciona</a>
             <a href="#casos" onClick={() => setMobileOpen(false)}>Casos reales</a>
-            <button onClick={() => scrollTo("contacto")}>Cotizar proyecto</button>
+            <a
+              href={buildQuoteWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-panel-cta"
+              onClick={() => setMobileOpen(false)}
+              aria-label="Cotizar proyecto por WhatsApp"
+            >
+              Cotizar proyecto
+            </a>
           </div>
         )}
       </header>
@@ -522,13 +599,19 @@ export default function Home() {
                   <p className="rec-desc">{activeRecommendation?.explanation}</p>
 
                   <div className="rec-actions">
-                    <button
-                      type="button"
+                    <a
+                      href={buildConfigWhatsAppUrl(
+                        business,
+                        goal,
+                        activeRecommendation?.solution || recommendedSolution
+                      )}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="btn btn-primary config-cta-btn"
-                      onClick={() => scrollTo("contacto")}
+                      aria-label="Quiero esta solución por WhatsApp"
                     >
                       Quiero esta solución <Icon name="arrow" size={18} />
-                    </button>
+                    </a>
                     <button
                       type="button"
                       className="config-reset-btn"
@@ -719,6 +802,19 @@ export default function Home() {
           <div className="footer-note"><span>© 2026 IMPULSATECH</span><span>Ica, Perú · Atención remota</span></div>
         </div>
       </footer>
+
+      <a
+        href={buildFloatingWhatsAppUrl()}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="whatsapp-float"
+        aria-label="Contactar a IMPULSATECH por WhatsApp"
+      >
+        <span className="whatsapp-float-icon">
+          <WhatsAppIcon size={24} />
+        </span>
+        <span className="whatsapp-float-text">WhatsApp</span>
+      </a>
     </main>
   );
 }
