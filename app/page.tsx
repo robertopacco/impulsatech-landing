@@ -89,15 +89,76 @@ const services = [
   { icon: "bot" as IconName, title: "Agentes IA", text: "Asistentes que consultan información, califican leads y apoyan operaciones.", tag: "Escala tu atención" },
 ];
 
-const businessTypes = ["Restaurante / cafetería", "Hotel / hospedaje", "Tienda / negocio", "Profesional / servicios", "Otro"];
-const goals = ["Conseguir más reseñas", "Captar clientes", "Vender más", "Atender automáticamente", "Modernizar el negocio"];
+const businessTypes = [
+  "Restaurante / pollería",
+  "Cafetería / pastelería",
+  "Hotel / hospedaje",
+  "Barbería / salón",
+  "Tienda / retail",
+  "Clínica / consultorio",
+  "Servicios profesionales",
+  "Otro",
+];
 
-const serviceMatrix: Record<string, string> = {
-  "Conseguir más reseñas": "NFC + QR para Google",
-  "Captar clientes": "Landing page + WhatsApp",
-  "Vender más": "Web comercial + automatización",
-  "Atender automáticamente": "WhatsApp + agente IA",
-  "Modernizar el negocio": "Pack digital IMPULSATECH",
+const goals = [
+  "Conseguir más reseñas en Google",
+  "Tener una página web profesional",
+  "Recibir más consultas por WhatsApp",
+  "Automatizar tareas repetitivas",
+  "Atender clientes automáticamente",
+  "Digitalizar menú / catálogo / información",
+  "No estoy seguro, quiero asesoría",
+];
+
+interface RecommendationInfo {
+  solution: string;
+  explanation: string;
+  badge: string;
+}
+
+const recommendationsByGoal: Record<string, RecommendationInfo> = {
+  "Conseguir más reseñas en Google": {
+    solution: "NFC + QR para Google",
+    explanation:
+      "Tus clientes acercan el celular a la placa o sticker y califican en Google en 5 segundos sin buscar tu negocio manualmente.",
+    badge: "Reputación rápida",
+  },
+  "Tener una página web profesional": {
+    solution: "Landing page / sitio web",
+    explanation:
+      "Presencia digital moderna, rápida y persuasiva, diseñada para transmitir confianza inmediata y convertir visitas en clientes.",
+    badge: "Diseño + conversión",
+  },
+  "Recibir más consultas por WhatsApp": {
+    solution: "Web + WhatsApp Business",
+    explanation:
+      "Estructura comercial pensada para guiar al visitante directo a tu chat con mensajes preconfigurados y listos para atender.",
+    badge: "Captación comercial",
+  },
+  "Automatizar tareas repetitivas": {
+    solution: "Automatizaciones",
+    explanation:
+      "Conexión de formularios, respuestas, registros y notificaciones para ahorrar horas operativas cada semana.",
+    badge: "Ahorra tiempo",
+  },
+  "Atender clientes automáticamente": {
+    solution: "Chatbot / Agente IA",
+    explanation:
+      "Asistente inteligente disponible 24/7 para responder preguntas frecuentes, calificar prospectos y no perder clientes.",
+    badge: "Atención 24/7",
+  },
+  "Digitalizar menú / catálogo / información": {
+    solution: "NFC + QR + solución digital",
+    explanation:
+      "Acceso instantáneo a tu carta, catálogo o datos clave con un solo toque o escaneo desde cualquier smartphone.",
+    badge: "Acceso con un toque",
+  },
+  "No estoy seguro, quiero asesoría": {
+    solution: "Diagnóstico personalizado",
+    explanation:
+      "Analizamos tu negocio paso a paso y te planteamos la ruta digital más simple, rápida y rentable para empezar.",
+    badge: "Asesoría a medida",
+  },
 };
 
 const cases = [
@@ -118,11 +179,42 @@ function Brand() {
 export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [business, setBusiness] = useState(businessTypes[0]);
-  const [goal, setGoal] = useState(goals[0]);
+  const [configStep, setConfigStep] = useState(1);
+  const [business, setBusiness] = useState("");
+  const [goal, setGoal] = useState("");
+  const [recommendedSolution, setRecommendedSolution] = useState(
+    "NFC + QR para Google"
+  );
   const [submitted, setSubmitted] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
   const servicesRef = useRef<HTMLDivElement>(null);
+
+  const activeRecommendation = useMemo(() => {
+    if (goal && recommendationsByGoal[goal]) {
+      return recommendationsByGoal[goal];
+    }
+    return recommendationsByGoal["Conseguir más reseñas en Google"];
+  }, [goal]);
+
+  const handleSelectBusiness = (item: string) => {
+    setBusiness(item);
+    setConfigStep(2);
+  };
+
+  const handleSelectGoal = (item: string) => {
+    setGoal(item);
+    const rec = recommendationsByGoal[item];
+    if (rec) {
+      setRecommendedSolution(rec.solution);
+    }
+    setConfigStep(3);
+  };
+
+  const handleResetConfig = () => {
+    setConfigStep(1);
+    setBusiness("");
+    setGoal("");
+  };
 
   const updateCarouselState = () => {
     const el = servicesRef.current;
@@ -183,7 +275,6 @@ export default function Home() {
     return () => window.clearInterval(id);
   }, []);
 
-  const recommendation = useMemo(() => serviceMatrix[goal], [goal]);
   const currentHero = heroModes[heroIndex];
 
   function scrollTo(id: string) {
@@ -284,18 +375,171 @@ export default function Home() {
             <div className="local-chip"><Icon name="pin" size={17}/> Atención para negocios locales y remotos</div>
           </div>
           <div className="config-card">
-            <div className="step-label"><span>01</span> ¿Qué tipo de negocio tienes?</div>
-            <div className="choice-grid">
-              {businessTypes.map((item) => <button key={item} className={business === item ? "selected" : ""} onClick={() => setBusiness(item)}>{item}{business === item && <Icon name="check" size={15}/>}</button>)}
+            <div className="config-stepper-top">
+              <div className="config-step-indicator">
+                <span className="config-step-pill">Paso {configStep} de 3</span>
+                {configStep > 1 && (
+                  <button
+                    type="button"
+                    className="config-back-link"
+                    onClick={() => setConfigStep((s) => s - 1)}
+                    aria-label="Volver al paso anterior"
+                  >
+                    <Icon name="arrow" size={14} /> Volver
+                  </button>
+                )}
+              </div>
+              <div
+                className="config-progress-bar"
+                role="progressbar"
+                aria-valuenow={configStep}
+                aria-valuemin={1}
+                aria-valuemax={3}
+              >
+                <div
+                  className="config-progress-fill"
+                  style={{
+                    width:
+                      configStep === 1 ? "33%" : configStep === 2 ? "66%" : "100%",
+                  }}
+                />
+              </div>
             </div>
-            <div className="step-label second"><span>02</span> ¿Qué quieres conseguir?</div>
-            <div className="goal-grid">
-              {goals.map((item) => <button key={item} className={goal === item ? "selected" : ""} onClick={() => setGoal(item)}>{item}</button>)}
-            </div>
-            <div className="recommendation">
-              <div><small>RECOMENDACIÓN INICIAL</small><strong>{recommendation}</strong><span>Para: {business}</span></div>
-              <button onClick={() => scrollTo("contacto")}><Icon name="arrow" size={18}/></button>
-            </div>
+
+            {configStep === 1 && (
+              <div className="config-step-pane" key="step-1">
+                <div className="config-question">
+                  <h3>¿Qué tipo de negocio tienes?</h3>
+                  <p>Selecciona tu rubro para personalizar las soluciones:</p>
+                </div>
+                <div className="config-choice-grid">
+                  {businessTypes.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      className={`config-choice-btn ${business === item ? "selected" : ""}`}
+                      onClick={() => handleSelectBusiness(item)}
+                    >
+                      <span>{item}</span>
+                      <span className="choice-check">
+                        {business === item ? (
+                          <Icon name="check" size={16} />
+                        ) : (
+                          <span className="choice-circle" />
+                        )}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {business && (
+                  <div className="config-step-actions">
+                    <button
+                      type="button"
+                      className="btn btn-primary config-continue-btn"
+                      onClick={() => setConfigStep(2)}
+                    >
+                      Continuar <Icon name="arrow" size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {configStep === 2 && (
+              <div className="config-step-pane" key="step-2">
+                <div className="config-question">
+                  <div className="config-context-badge">
+                    <Icon name="pin" size={14} /> Negocio: <strong>{business}</strong>
+                  </div>
+                  <h3>¿Qué quieres mejorar?</h3>
+                  <p>Elige tu objetivo principal para recomendarte la mejor alternativa:</p>
+                </div>
+                <div className="config-choice-grid">
+                  {goals.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      className={`config-choice-btn ${goal === item ? "selected" : ""}`}
+                      onClick={() => handleSelectGoal(item)}
+                    >
+                      <span>{item}</span>
+                      <span className="choice-check">
+                        {goal === item ? (
+                          <Icon name="check" size={16} />
+                        ) : (
+                          <span className="choice-circle" />
+                        )}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                {goal && (
+                  <div className="config-step-actions">
+                    <button
+                      type="button"
+                      className="btn btn-primary config-continue-btn"
+                      onClick={() => setConfigStep(3)}
+                    >
+                      Ver recomendación <Icon name="arrow" size={16} />
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {configStep === 3 && (
+              <div className="config-step-pane" key="step-3">
+                <div className="config-question">
+                  <div className="config-summary-tags">
+                    <span className="config-summary-tag">
+                      <small>Negocio</small>
+                      <strong>{business}</strong>
+                    </span>
+                    <span className="config-summary-tag">
+                      <small>Objetivo</small>
+                      <strong>{goal}</strong>
+                    </span>
+                  </div>
+                  <h3>Solución recomendada para tu negocio</h3>
+                  <p>Según tu rubro y objetivo, esta es la ruta con mayor impacto y retorno:</p>
+                </div>
+
+                <div className="config-recommendation-card">
+                  <div className="rec-card-top">
+                    <span className="rec-badge">
+                      <Icon name="spark" size={14} /> Solución sugerida
+                    </span>
+                    {activeRecommendation?.badge && (
+                      <span className="rec-highlight-tag">
+                        {activeRecommendation.badge}
+                      </span>
+                    )}
+                  </div>
+
+                  <h4 className="rec-title">
+                    {activeRecommendation?.solution || recommendedSolution}
+                  </h4>
+                  <p className="rec-desc">{activeRecommendation?.explanation}</p>
+
+                  <div className="rec-actions">
+                    <button
+                      type="button"
+                      className="btn btn-primary config-cta-btn"
+                      onClick={() => scrollTo("contacto")}
+                    >
+                      Quiero esta solución <Icon name="arrow" size={18} />
+                    </button>
+                    <button
+                      type="button"
+                      className="config-reset-btn"
+                      onClick={handleResetConfig}
+                    >
+                      Modificar respuestas
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>

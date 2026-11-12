@@ -134,23 +134,330 @@ button { cursor: pointer; }
 .section-intro h2 span, .section-heading h2 span { color: #6b7280; }
 .section-intro > p { color: #4b5563; line-height: 1.65; max-width: 420px; margin: 25px 0 0; font-size: 15px; }
 .local-chip { margin-top: 28px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 999px; border: 1px solid #d1d5db; color: #374151; background: white; font-size: 13px; font-weight: 500; }
-.config-card { padding: 32px; border-radius: 30px; background: white; box-shadow: var(--shadow); border: 1px solid #e5e7eb; }
-.step-label { display: flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 750; color: var(--ink); }
-.step-label span { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #f0f2ef; color: #4b5563; font-size: 12px; font-weight: 750; }
-.step-label.second { margin-top: 30px; }
-.choice-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 14px; }
-.choice-grid button, .goal-grid button { min-height: 48px; border: 1px solid #d1d5db; color: #374151; background: #fafbf9; border-radius: 14px; padding: 12px 14px; text-align: left; font-size: 13px; font-weight: 550; display: flex; align-items: center; justify-content: space-between; transition: .2s ease; }
-.choice-grid button:hover, .goal-grid button:hover { border-color: #9ca3af; }
-.choice-grid button.selected, .goal-grid button.selected { border-color: #171b22; background: #171b22; color: white; }
-.goal-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-.goal-grid button { min-height: 44px; border-radius: 999px; padding: 10px 16px; }
-.recommendation { margin-top: 26px; border-radius: 20px; padding: 20px; display: flex; align-items: center; justify-content: space-between; background: linear-gradient(135deg, #efffd0, #f7ffe7); border: 1px solid #c9ea74; }
-.recommendation small, .recommendation strong, .recommendation span { display: block; }
-.recommendation small { font-size: 11px; color: #475510; letter-spacing: .12em; font-weight: 850; }
-.recommendation strong { margin-top: 4px; font-size: 16px; color: #152005; }
-.recommendation span { margin-top: 3px; color: #3f4734; font-size: 13px; }
-.recommendation button { width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; border: 0; display: grid; place-items: center; background: var(--ink); color: white; transition: transform .2s ease; }
-.recommendation button:hover { transform: scale(1.04); }
+/* CONFIGURADOR DE 3 PASOS */
+.config-card {
+  padding: 34px 32px;
+  border-radius: 28px;
+  background: white;
+  box-shadow: var(--shadow);
+  border: 1px solid #e5e7eb;
+  position: relative;
+  overflow: hidden;
+}
+
+.config-stepper-top {
+  margin-bottom: 22px;
+}
+
+.config-step-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.config-step-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 750;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: #161b24;
+  background: #f1f4f0;
+  padding: 6px 12px;
+  border-radius: 999px;
+  border: 1px solid #e2e8e0;
+}
+
+.config-back-link {
+  border: 0;
+  background: transparent;
+  color: #4b5563;
+  font-size: 13px;
+  font-weight: 650;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  min-height: 44px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color .2s ease, background .2s ease;
+}
+.config-back-link:hover {
+  color: #0c0f14;
+  background: #f3f4f6;
+}
+.config-back-link svg {
+  transform: rotate(180deg);
+}
+
+.config-progress-bar {
+  width: 100%;
+  height: 4px;
+  background: #edf0ec;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.config-progress-fill {
+  height: 100%;
+  background: var(--lime);
+  border-radius: 999px;
+  transition: width .35s cubic-bezier(.22, 1, .36, 1);
+  box-shadow: 0 0 10px rgba(202, 255, 62, 0.6);
+}
+
+.config-step-pane {
+  animation: configStepFade .28s cubic-bezier(.2, .8, .2, 1);
+}
+
+@keyframes configStepFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.config-question h3 {
+  margin: 0;
+  font-size: 21px;
+  letter-spacing: -.03em;
+  font-weight: 750;
+  color: #0c0f14;
+  line-height: 1.25;
+}
+
+.config-question p {
+  margin: 6px 0 18px;
+  font-size: 14px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.config-context-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  font-size: 12px;
+  color: #374151;
+  margin-bottom: 10px;
+}
+.config-context-badge svg {
+  color: #10b981;
+}
+
+.config-choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.config-choice-btn {
+  min-height: 50px;
+  border: 1.5px solid #e2e8f0;
+  color: #1e293b;
+  background: #f9fafb;
+  border-radius: 14px;
+  padding: 12px 14px;
+  text-align: left;
+  font-size: 13.5px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  cursor: pointer;
+  transition: border-color .18s ease, background .18s ease, transform .15s ease, box-shadow .18s ease;
+}
+
+.config-choice-btn:hover {
+  border-color: #94a3b8;
+  background: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
+}
+
+.config-choice-btn.selected {
+  border-color: #0c0f14;
+  background: #0c0f14;
+  color: white;
+  box-shadow: 0 6px 18px rgba(12, 15, 20, .14);
+}
+
+.choice-check {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--lime);
+}
+
+.choice-circle {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid #cbd5e1;
+  transition: border-color .2s ease;
+}
+.config-choice-btn:hover .choice-circle {
+  border-color: #94a3b8;
+}
+
+.config-step-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.config-continue-btn {
+  min-height: 46px;
+  font-size: 13.5px;
+  padding: 10px 20px;
+}
+
+/* PASO 3 - RECOMENDACIÓN */
+.config-summary-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.config-summary-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f1f4f0;
+  border: 1px solid #dce2da;
+  font-size: 12px;
+}
+.config-summary-tag small {
+  color: #64748b;
+  text-transform: uppercase;
+  font-size: 10.5px;
+  letter-spacing: .04em;
+  font-weight: 700;
+}
+.config-summary-tag strong {
+  color: #0f172a;
+}
+
+.config-recommendation-card {
+  margin-top: 16px;
+  border-radius: 22px;
+  padding: 24px;
+  background: #0b0f16;
+  color: white;
+  border: 1px solid rgba(202, 255, 62, .26);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, .18), 0 0 24px rgba(202, 255, 62, .06);
+  position: relative;
+  overflow: hidden;
+}
+
+.config-recommendation-card::before {
+  content: "";
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  right: -80px;
+  top: -80px;
+  background: radial-gradient(circle, rgba(202, 255, 62, .12), transparent 70%);
+  pointer-events: none;
+}
+
+.rec-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.rec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--lime);
+}
+
+.rec-highlight-tag {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #e2e8f0;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .12);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+.rec-title {
+  margin: 12px 0 0;
+  font-size: clamp(22px, 3.2vw, 28px);
+  line-height: 1.15;
+  letter-spacing: -.04em;
+  font-weight: 750;
+  color: white;
+}
+
+.rec-desc {
+  margin: 10px 0 0;
+  color: rgba(255, 255, 255, .78);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.rec-actions {
+  margin-top: 24px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.config-cta-btn {
+  min-height: 48px;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 750;
+}
+
+.config-reset-btn {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, .68);
+  font-size: 13px;
+  font-weight: 650;
+  padding: 8px 12px;
+  min-height: 44px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: color .2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+.config-reset-btn:hover {
+  color: white;
+}
 
 /* SERVICIOS */
 .services-section { background: #f1f2ef; padding: 140px 0 155px; overflow: hidden; }
@@ -536,11 +843,16 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
 
   .section-intro h2, .section-heading h2 { font-size: clamp(38px, 11vw, 52px); }
   .config-card { padding: 22px 18px; border-radius: 22px; }
-  .choice-grid { grid-template-columns: 1fr; gap: 8px; }
-  .choice-grid button { min-height: 48px; padding: 12px 14px; font-size: 13px; }
-  .goal-grid button { min-height: 44px; padding: 10px 14px; font-size: 13px; }
-  .recommendation { padding: 16px; border-radius: 16px; }
-  .recommendation button { width: 48px; height: 48px; min-width: 48px; min-height: 48px; }
+  .config-choice-grid { grid-template-columns: 1fr; gap: 8px; }
+  .config-choice-btn { min-height: 48px; padding: 12px 14px; font-size: 13.5px; }
+  .config-step-actions { justify-content: stretch; }
+  .config-continue-btn { width: 100%; min-height: 48px; justify-content: center; }
+  .config-recommendation-card { padding: 20px 16px; border-radius: 18px; }
+  .rec-title { font-size: 22px; }
+  .rec-desc { font-size: 13.5px; }
+  .rec-actions { flex-direction: column; align-items: stretch; gap: 10px; }
+  .config-cta-btn { width: 100%; min-height: 48px; }
+  .config-reset-btn { justify-content: center; width: 100%; min-height: 44px; }
 
   .services-nav-controls {
     display: flex;
