@@ -256,11 +256,34 @@ const cases: CaseItem[] = [
     photoAlt: "Entrega real de solución NFC en Hospedaje El Sol de Luren",
   },
 ];
-function Brand() {
+function HeaderBrand() {
   return (
-    <a className="brand" href="#inicio" aria-label="IMPULSATECH inicio">
-      <span className="brand-mark"><Icon name="spark" size={18} /></span>
-      <span>IMPULSA<span>TECH</span></span>
+    <a className="brand-header" href="#inicio" aria-label="IMPULSATECH inicio">
+      <Image
+        src="/marca/impulsatech-logo-horizontal-final-1000.png"
+        alt="IMPULSATECH"
+        width={1000}
+        height={134}
+        className="brand-logo-header"
+        style={{ objectFit: "contain", objectPosition: "left center" }}
+        priority
+      />
+    </a>
+  );
+}
+
+function FooterBrand() {
+  return (
+    <a className="brand-footer" href="#inicio" aria-label="IMPULSATECH inicio">
+      <Image
+        src="/marca/impulsatech-logo-blanco.png"
+        alt="IMPULSATECH"
+        width={1400}
+        height={373}
+        className="brand-logo-footer"
+        style={{ objectFit: "contain", objectPosition: "center left" }}
+        loading="lazy"
+      />
     </a>
   );
 }
@@ -448,7 +471,7 @@ export default function Home() {
     <main>
       <header className="site-header">
         <div className="shell nav-shell">
-          <Brand />
+          <HeaderBrand />
           <nav className="desktop-nav" aria-label="Navegación principal">
             <a href="#servicios">Servicios</a>
             <a href="#como-funciona">Cómo funciona</a>
@@ -966,7 +989,7 @@ export default function Home() {
 
       <footer>
         <div className="shell footer-grid">
-          <div><Brand/><p>Tecnología práctica para negocios que quieren crecer.</p></div>
+          <div><FooterBrand/><p>Tecnología práctica para negocios que quieren crecer.</p></div>
           <div className="footer-links">
             <a href="#servicios">Servicios</a>
             <a href="#como-funciona">Proceso</a>
