@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 type IconName =
@@ -216,30 +217,45 @@ const recommendationsByGoal: Record<string, RecommendationInfo> = {
   },
 };
 
-const cases = [
+interface CaseItem {
+  name: string;
+  category: string;
+  solution: string;
+  headerCard: string;
+  headerAlt: string;
+  photo: string;
+  photoAlt: string;
+}
+
+const cases: CaseItem[] = [
   {
     name: "Pastelarte Coffee Cat",
-    category: "Cafetería en Ica",
+    category: "Cafetería · Ica",
     solution: "Tarjeta NFC para facilitar reseñas en Google.",
-    glyph: "☕",
-    className: "case-pink",
+    headerCard: "/casos/logos/pastelarte-logo-card.png",
+    headerAlt: "Cabecera de Pastelarte Coffee Cat",
+    photo: "/casos/pastelarte/pastelarte-propietario-real.webp",
+    photoAlt: "Entrega real de tarjeta NFC en Pastelarte Coffee Cat",
   },
   {
     name: "Pollería Misky",
-    category: "Restaurante en Ica",
+    category: "Restaurante · Ica",
     solution: "QR A4 + NFC para facilitar el acceso a reseñas de Google.",
-    glyph: "✦",
-    className: "case-gold",
+    headerCard: "/casos/logos/misky-logo-card.png",
+    headerAlt: "Cabecera de Pollería Misky",
+    photo: "/casos/misky/misky-propietaria-real.webp",
+    photoAlt: "Entrega real de soporte QR A4 y NFC en Pollería Misky",
   },
   {
-    name: "Hospedaje",
-    category: "Hospedaje en Ica",
+    name: "El Sol de Luren",
+    category: "Hospedaje · Ica",
     solution: "Tarjeta / banner NFC personalizado para facilitar reseñas de Google.",
-    glyph: "⌂",
-    className: "case-blue",
+    headerCard: "/casos/logos/sol-de-luren-logo-card.png",
+    headerAlt: "Cabecera de Hospedaje El Sol de Luren",
+    photo: "/casos/hospedaje-sol-luren/hospedaje-sol-luren-propietario-real.webp",
+    photoAlt: "Entrega real de solución NFC en Hospedaje El Sol de Luren",
   },
 ];
-
 function Brand() {
   return (
     <a className="brand" href="#inicio" aria-label="IMPULSATECH inicio">
@@ -848,15 +864,39 @@ export default function Home() {
           </div>
           <div className="cases-grid">
             {cases.map((item) => (
-              <article key={item.name} className={`case-card ${item.className}`}>
-                <div className="case-art">
-                  <span>{item.glyph}</span>
-                  <div className="case-phone"><div/><div/><div/></div>
+              <article key={item.name} className="case-card">
+                {/* CABECERA SUPERIOR */}
+                <div className="case-header-card">
+                  <Image
+                    src={item.headerCard}
+                    alt={item.headerAlt}
+                    fill
+                    sizes="(max-width: 820px) 100vw, 380px"
+                    className="case-header-img"
+                    style={{ objectFit: "cover", objectPosition: "center" }}
+                    loading="lazy"
+                  />
                 </div>
+
+                {/* BODY */}
                 <div className="case-body">
                   <small>{item.category}</small>
                   <h3>{item.name}</h3>
                   <p className="case-solution">{item.solution}</p>
+
+                  {/* FOTO REAL PROPIETARIO / ENTREGA */}
+                  <div className="case-photo-wrapper">
+                    <Image
+                      src={item.photo}
+                      alt={item.photoAlt}
+                      fill
+                      sizes="(max-width: 820px) 90vw, 380px"
+                      style={{ objectFit: "contain", objectPosition: "center" }}
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* CTA */}
                   <a
                     href={buildCaseWhatsAppUrl(item.name)}
                     target="_blank"
