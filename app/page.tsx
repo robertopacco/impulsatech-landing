@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
+import CursorFollower from "@/components/CursorFollower";
 
 type IconName =
   | "spark"
@@ -461,6 +462,33 @@ export default function Home() {
   }, []);
 
   const currentHero = heroModes[heroIndex];
+  const [activeSection, setActiveSection] = useState<string>("");
+
+  useEffect(() => {
+    const sectionIds = ["inicio", "configurador", "servicios", "como-funciona", "casos", "contacto"];
+    const elements = sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: "-20% 0px -55% 0px",
+        threshold: 0,
+      }
+    );
+
+    elements.forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
 
   function scrollTo(id: string) {
     setMobileOpen(false);
@@ -469,14 +497,15 @@ export default function Home() {
 
   return (
     <main>
+      <CursorFollower />
       <header className="site-header">
         <div className="shell nav-shell">
           <HeaderBrand />
           <nav className="desktop-nav" aria-label="Navegación principal">
-            <a href="#servicios">Servicios</a>
-            <a href="#como-funciona">Cómo funciona</a>
-            <a href="#casos">Casos reales</a>
-            <a href="#contacto">Contacto</a>
+            <a href="#servicios" className={activeSection === "servicios" ? "is-active" : ""}>Servicios</a>
+            <a href="#como-funciona" className={activeSection === "como-funciona" ? "is-active" : ""}>Cómo funciona</a>
+            <a href="#casos" className={activeSection === "casos" ? "is-active" : ""}>Casos reales</a>
+            <a href="#contacto" className={activeSection === "contacto" ? "is-active" : ""}>Contacto</a>
           </nav>
           <a
             href={buildQuoteWhatsAppUrl()}

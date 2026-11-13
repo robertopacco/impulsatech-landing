@@ -91,8 +91,57 @@ button { cursor: pointer; }
   display: block;
 }
 .desktop-nav { display: flex; align-items: center; gap: 28px; font-size: 14px; color: rgba(255,255,255,.82); }
-.desktop-nav a { transition: .2s ease; }
-.desktop-nav a:hover { color: white; }
+.desktop-nav a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 0;
+  color: rgba(255, 255, 255, 0.82);
+  transition: color 0.2s ease;
+  text-decoration: none;
+  outline: none;
+}
+.desktop-nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #0064e8, #00cff0);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 260ms ease;
+  opacity: 0;
+  pointer-events: none;
+}
+.desktop-nav a:hover {
+  color: #ffffff;
+}
+.desktop-nav a:hover::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
+.desktop-nav a.is-active {
+  color: #ffffff;
+}
+.desktop-nav a.is-active::after {
+  transform: scaleX(1);
+  opacity: 0.6;
+}
+.desktop-nav a.is-active:hover::after {
+  opacity: 1;
+}
+.desktop-nav a:focus-visible {
+  outline: 2px solid var(--brand-cyan);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+.desktop-nav a:focus-visible::after {
+  transform: scaleX(1);
+  opacity: 1;
+}
 .nav-cta { justify-self: end; border: 1px solid rgba(255,255,255,.28); color: white; background: rgba(255,255,255,.08); padding: 12px 18px; border-radius: 999px; display: flex; align-items: center; gap: 8px; font-weight: 650; font-size: 13px; min-height: 44px; backdrop-filter: blur(16px); }
 .mobile-menu { display: none; justify-self: end; border: 0; color: white; background: rgba(255,255,255,.12); width: 46px; height: 46px; min-width: 46px; min-height: 46px; border-radius: 50%; place-items: center; }
 .mobile-panel { display: none; }
@@ -1467,7 +1516,52 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
   }
 }
 
+/* CURSOR FOLLOWER IMPULSATECH */
+.cursor-follower {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor-follower {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin-left: -4px;
+    margin-top: -4px;
+    border-radius: 50%;
+    background-color: #00cff0;
+    box-shadow: 0 0 8px rgba(0, 207, 240, 0.25);
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0;
+    will-change: transform;
+    transition: opacity 0.25s ease,
+      width 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      margin 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+      box-shadow 0.22s ease;
+  }
+
+  .cursor-follower.is-visible {
+    opacity: 0.85;
+  }
+
+  .cursor-follower.is-hovering {
+    width: 14px;
+    height: 14px;
+    margin-left: -7px;
+    margin-top: -7px;
+    opacity: 0.55;
+    box-shadow: 0 0 10px rgba(0, 207, 240, 0.35);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .cursor-follower { display: none !important; }
+  .desktop-nav a::after { transition: none !important; }
 }
