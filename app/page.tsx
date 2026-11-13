@@ -940,22 +940,35 @@ export default function Home() {
       <section className="trust-section">
         <div className="shell">
           <div className="trust-card">
-            <div className="trust-badge">
-              <Icon name="shield" size={15} /> CONFIANZA LOCAL
-            </div>
-            <h2>Tecnología con atención humana.</h2>
-            <p className="trust-text">
-              IMPULSATECH nace en Ica para ayudar a negocios a aprovechar herramientas digitales de forma simple, práctica y cercana.
-            </p>
-            <div className="trust-location-tag">
-              <Icon name="pin" size={15} />
-              <span>Atención presencial en Ica y atención por WhatsApp para todo el Perú.</span>
-            </div>
-            <div className="trust-signature">
-              <div className="signature-avatar" aria-hidden="true">RP</div>
-              <div>
+            <div className="trust-info-col">
+              <div className="trust-badge">
+                <Icon name="shield" size={15} /> CONFIANZA LOCAL
+              </div>
+              <h2>Tecnología con atención humana.</h2>
+              <p className="trust-text">
+                IMPULSATECH nace en Ica para ayudar a negocios a aprovechar herramientas digitales de forma simple, práctica y cercana.
+              </p>
+              <div className="trust-location-tag">
+                <Icon name="pin" size={15} />
+                <span>Atención presencial en Ica y atención por WhatsApp para todo el Perú.</span>
+              </div>
+              <div className="trust-signature">
                 <strong>Roberto Pacco</strong>
                 <span>Fundador · Ingeniero de Sistemas</span>
+              </div>
+            </div>
+
+            <div className="trust-photo-col">
+              <div className="trust-photo-frame">
+                <Image
+                  src="/marca/roberto-pacco-titulo.jpg"
+                  alt="Roberto Pacco - Fundador e Ingeniero de Sistemas de IMPULSATECH"
+                  width={794}
+                  height={1007}
+                  className="trust-photo-img"
+                  sizes="(max-width: 820px) 90vw, 380px"
+                  priority={false}
+                />
               </div>
             </div>
           </div>
