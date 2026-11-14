@@ -597,6 +597,47 @@ export default function Home() {
         </div>
       </section>
 
+      {/* PRUEBA SOCIAL */}
+      <section className="social-proof-strip" aria-label="Negocios con soluciones implementadas">
+        <div className="shell social-proof-shell">
+          <div className="social-proof-header">
+            <p className="social-proof-label">SOLUCIONES IMPLEMENTADAS EN NEGOCIOS DE ICA</p>
+          </div>
+          <div className="social-proof-logos">
+            <div className="proof-logo-item" title="Pastelarte Coffee Cat">
+              <Image
+                src="/casos/logos/pastelarte-logo-real.png"
+                alt="Pastelarte Coffee Cat"
+                width={140}
+                height={140}
+                className="proof-logo-img"
+              />
+            </div>
+            <div className="proof-logo-item" title="Pollería Misky">
+              <Image
+                src="/casos/logos/misky-logo-real.png"
+                alt="Pollería Misky"
+                width={140}
+                height={140}
+                className="proof-logo-img"
+              />
+            </div>
+            <div className="proof-logo-item" title="El Sol de Luren">
+              <Image
+                src="/casos/logos/sol-de-luren-logo-real.png"
+                alt="El Sol de Luren"
+                width={140}
+                height={140}
+                className="proof-logo-img"
+              />
+            </div>
+          </div>
+          <a href="#casos" className="proof-cases-link" aria-label="Ver casos reales">
+            Ver casos reales <Icon name="arrow" size={14} />
+          </a>
+        </div>
+      </section>
+
       <section className="config-section" id="configurador">
         <div className="shell config-grid">
           <div className="section-intro">
