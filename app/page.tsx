@@ -1001,27 +1001,33 @@ export default function Home() {
 
       <section className="process-section" id="como-funciona">
         <div className="shell">
-          <div className="section-heading centered">
-            <div className="kicker">CÓMO FUNCIONA</div>
-            <h2>De idea a solución.<br/><span>Sin complicarte.</span></h2>
+          <div className="process-heading">
+            <div>
+              <div className="kicker">CÓMO TRABAJAMOS</div>
+              <h2>De tu idea a una<br/><span>solución funcionando.</span></h2>
+            </div>
+            <p>Nos cuentas qué necesita tu negocio y nosotros nos encargamos de convertirlo en una solución simple, funcional y lista para usar.</p>
           </div>
-          <div className="process-grid">
-            {[
-              ["01", "Conversemos", "Entendemos tu negocio, problema y objetivo real."],
-              ["02", "Diseñamos", "Definimos la solución, contenido y experiencia."],
-              ["03", "Construimos", "Desarrollamos, configuramos y probamos."],
-              ["04", "Lanzamos", "Publicamos, medimos y dejamos todo listo para usar."],
-            ].map(([num, title, text], index) => (
-              <article className="process-step" key={num}>
-                <div className="process-top"><span>{num}</span>{index < 3 && <i />}</div>
-                <h3>{title}</h3><p>{text}</p>
-              </article>
-            ))}
-          </div>
-          <div className="process-quote">
-            <span className="quote-mark">“</span>
-            <p>La mejor tecnología es la que tu cliente entiende sin que tengas que explicarla.</p>
-            <div><span className="brand-mini"><Icon name="spark" size={15}/></span><strong>IMPULSATECH</strong><small>Soluciones digitales para negocios</small></div>
+          <div className="process-flow">
+            <ol className="process-grid" aria-label="Nuestro proceso de trabajo">
+              {[
+                ["01", "chat", "Cuéntanos qué necesitas", "Conocemos tu negocio, tu objetivo y el problema que quieres resolver."],
+                ["02", "spark", "Diseñamos la solución", "Definimos la opción más simple y efectiva para tu negocio y presupuesto."],
+                ["03", "check", "Implementamos y probamos", "Configuramos, desarrollamos y validamos la solución antes de entregarla."],
+                ["04", "shield", "Te acompañamos", "Te explicamos cómo usarla y seguimos disponibles para mejoras o soporte."],
+              ].map(([num, icon, title, text]) => (
+                <li className="process-step" key={num}>
+                  <div className="process-step-top">
+                    <span className="process-number">{num}</span>
+                    <span className="process-icon"><Icon name={icon as IconName} size={20}/></span>
+                  </div>
+                  <div className="process-copy">
+                    <h3>{title}</h3>
+                    <p>{text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
           </div>
         </div>
       </section>
