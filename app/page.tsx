@@ -883,18 +883,17 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="services-dots" role="tablist" aria-label="Indicadores de servicios">
+          <div className="services-dots" role="group" aria-label="Navegación de servicios">
             {services.map((service, index) => (
               <button
                 key={service.title}
                 type="button"
-                role="tab"
-                aria-selected={index === serviceIndex}
+                aria-current={index === serviceIndex ? "true" : undefined}
                 className={`services-dot ${index === serviceIndex ? "active" : ""}`}
                 onClick={() => scrollToService(index)}
-                aria-label={`Ir al servicio ${index + 1}: ${service.title}`}
+                aria-label={`Ir al servicio ${service.title}`}
               >
-                <span />
+                <span aria-hidden="true" />
               </button>
             ))}
           </div>
