@@ -19,7 +19,9 @@ type IconName =
   | "close"
   | "bolt"
   | "pin"
-  | "shield";
+  | "shield"
+  | "link"
+  | "store";
 
 function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
   const common = {
@@ -50,6 +52,8 @@ function Icon({ name, size = 20 }: { name: IconName; size?: number }) {
     bolt: <path d="m13 2-8 12h7l-1 8 8-12h-7l1-8Z"/>,
     pin: <><path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></>,
     shield: <><path d="M12 3 5 6v5c0 4.8 2.8 8 7 10 4.2-2 7-5.2 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></>,
+    link: <><path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"/><path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"/></>,
+    store: <><path d="M3 10h18l-2-6H5l-2 6Z"/><path d="M5 10v10h14V10M9 20v-6h6v6"/><path d="M3 10a3 3 0 0 0 6 0 3 3 0 0 0 6 0 3 3 0 0 0 6 0"/></>,
   };
 
   return <svg {...common}>{paths[name]}</svg>;
@@ -87,61 +91,61 @@ const services = [
   {
     icon: "nfc" as IconName,
     title: "NFC + QR",
-    text: "Reseñas de Google, menús, catálogos, links y acciones con un toque.",
-    tag: "Rápido de implementar",
-    cta: "Quiero más reseñas",
+    text: "Reseñas de Google y accesos instantáneos con solo acercar o escanear.",
+    tag: "Tarjetas NFC + códigos QR",
+    cta: "Quiero NFC + QR",
     waMessage: [
       "Hola IMPULSATECH",
       "",
-      "Quisiera más información sobre la solución de NFC + QR para conseguir reseñas en Google.",
+      "Quisiera más información sobre tarjetas NFC y códigos QR para reseñas de Google y accesos rápidos.",
+    ].join("\n"),
+  },
+  {
+    icon: "link" as IconName,
+    title: "Smart Links & Menús",
+    text: "Todos los enlaces, menú o catálogo de tu negocio en un solo lugar.",
+    tag: "Todo en un solo enlace",
+    cta: "Quiero un Smart Link",
+    waMessage: [
+      "Hola IMPULSATECH",
+      "",
+      "Quisiera más información sobre Smart Links, menús o catálogos digitales para mi negocio.",
     ].join("\n"),
   },
   {
     icon: "web" as IconName,
-    title: "Landing & Web",
-    text: "Sitios modernos, rápidos y pensados para convertir visitas en contactos.",
+    title: "Páginas Web",
+    text: "Landing pages y sitios profesionales diseñados para convertir visitas en clientes.",
     tag: "Diseño + conversión",
     cta: "Quiero mi página web",
     waMessage: [
       "Hola IMPULSATECH",
       "",
-      "Quisiera más información sobre el diseño de mi página web o landing page.",
+      "Quisiera más información sobre una landing page o página web profesional para mi negocio.",
     ].join("\n"),
   },
   {
     icon: "chat" as IconName,
     title: "WhatsApp & Chatbots",
-    text: "Flujos de atención, respuestas automáticas y derivación para responder más rápido.",
-    tag: "Atención comercial",
-    cta: "Quiero atención automática",
+    text: "Atención más rápida, respuestas frecuentes y contacto directo con tus clientes.",
+    tag: "Atención más ágil",
+    cta: "Mejorar mi atención",
     waMessage: [
       "Hola IMPULSATECH",
       "",
-      "Quisiera más información sobre atención automática y chatbots por WhatsApp.",
+      "Quisiera más información sobre WhatsApp y chatbots para atender mejor a mis clientes.",
     ].join("\n"),
   },
   {
-    icon: "bolt" as IconName,
-    title: "Automatizaciones",
-    text: "Procesos conectados para reducir tareas manuales y errores repetitivos.",
-    tag: "Ahorra tiempo",
-    cta: "Quiero automatizar mi negocio",
+    icon: "store" as IconName,
+    title: "Sistemas para Negocios",
+    text: "Ventas, reservas, stock, pedidos y gestión adaptados al rubro de tu negocio.",
+    tag: "Gestión a tu medida",
+    cta: "Quiero un sistema",
     waMessage: [
       "Hola IMPULSATECH",
       "",
-      "Quisiera más información sobre automatizaciones de procesos para mi negocio.",
-    ].join("\n"),
-  },
-  {
-    icon: "bot" as IconName,
-    title: "Agentes IA",
-    text: "Asistentes que consultan información, califican leads y apoyan operaciones.",
-    tag: "Escala tu atención",
-    cta: "Quiero implementar IA",
-    waMessage: [
-      "Hola IMPULSATECH",
-      "",
-      "Quisiera más información sobre cómo implementar un agente de inteligencia artificial en mi negocio.",
+      "Quisiera más información sobre un sistema de ventas, reservas, stock, pedidos o gestión para mi negocio.",
     ].join("\n"),
   },
 ];
@@ -894,6 +898,9 @@ export default function Home() {
               </button>
             ))}
           </div>
+          <p className="services-advanced">
+            También desarrollamos soluciones avanzadas: Automatizaciones <span aria-hidden="true">·</span> Integraciones <span aria-hidden="true">·</span> Inteligencia Artificial
+          </p>
         </div>
       </section>
 
