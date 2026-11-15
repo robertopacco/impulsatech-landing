@@ -1,0 +1,4 @@
+interface:
+  display_name: "Responsive QA"
+  short_description: "Audita responsive, carruseles, overflow y breakpoints sin editar por defecto."
+  brand_color: "#0064E8"
