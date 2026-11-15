@@ -439,10 +439,6 @@ button { cursor: pointer; }
   cursor: pointer;
   transition: color .2s ease, background .2s ease;
 }
-.config-back-link:hover {
-  color: #0c0f14;
-  background: #f3f4f6;
-}
 .config-back-link svg {
   transform: rotate(180deg);
 }
@@ -507,7 +503,7 @@ button { cursor: pointer; }
   margin-bottom: 10px;
 }
 .config-context-badge svg {
-  color: #10b981;
+  color: var(--brand-blue-deep);
 }
 
 .config-choice-grid {
@@ -534,13 +530,6 @@ button { cursor: pointer; }
   transition: border-color .18s ease, background .18s ease, transform .15s ease, box-shadow .18s ease;
 }
 
-.config-choice-btn:hover {
-  border-color: #94a3b8;
-  background: white;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, .04);
-}
-
 .config-choice-btn.selected {
   border-color: #0c0f14;
   background: #0c0f14;
@@ -565,22 +554,6 @@ button { cursor: pointer; }
   border: 1.5px solid #cbd5e1;
   transition: border-color .2s ease;
 }
-.config-choice-btn:hover .choice-circle {
-  border-color: #94a3b8;
-}
-
-.config-step-actions {
-  margin-top: 18px;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.config-continue-btn {
-  min-height: 46px;
-  font-size: 13.5px;
-  padding: 10px 20px;
-}
-
 /* PASO 3 - RECOMENDACIÓN */
 .config-summary-tags {
   display: flex;
@@ -679,6 +652,33 @@ button { cursor: pointer; }
   line-height: 1.6;
 }
 
+.rec-complement {
+  margin: 18px 0 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(0, 207, 240, .24);
+  border-radius: 14px;
+  background: rgba(0, 143, 240, .08);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.rec-complement span {
+  color: rgba(255, 255, 255, .66);
+}
+.rec-complement strong {
+  color: white;
+  font-size: 14px;
+}
+
+.rec-advanced {
+  margin: 12px 0 0;
+  color: rgba(255, 255, 255, .52);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
 .rec-actions {
   margin-top: 24px;
   display: flex;
@@ -708,8 +708,31 @@ button { cursor: pointer; }
   display: inline-flex;
   align-items: center;
 }
-.config-reset-btn:hover {
-  color: white;
+@media (hover: hover) and (pointer: fine) {
+  .config-back-link:hover {
+    color: #07111B;
+    background: #f3f4f6;
+  }
+  .config-choice-btn:hover {
+    border-color: #008FF0;
+    background: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 100, 232, .08);
+  }
+  .config-choice-btn:hover .choice-circle {
+    border-color: #008FF0;
+  }
+  .config-reset-btn:hover {
+    color: white;
+  }
+}
+
+.config-back-link:focus-visible,
+.config-choice-btn:focus-visible,
+.config-cta-btn:focus-visible,
+.config-reset-btn:focus-visible {
+  outline: 3px solid #00CFF0;
+  outline-offset: 3px;
 }
 
 /* SERVICIOS */
@@ -1637,8 +1660,6 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
   .config-card { padding: 22px 18px; border-radius: 22px; }
   .config-choice-grid { grid-template-columns: 1fr; gap: 8px; }
   .config-choice-btn { min-height: 48px; padding: 12px 14px; font-size: 13.5px; }
-  .config-step-actions { justify-content: stretch; }
-  .config-continue-btn { width: 100%; min-height: 48px; justify-content: center; }
   .config-recommendation-card { padding: 20px 16px; border-radius: 18px; }
   .rec-title { font-size: 22px; }
   .rec-desc { font-size: 13.5px; }

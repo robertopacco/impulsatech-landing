@@ -159,68 +159,148 @@ const businessTypes = [
   "Clínica / consultorio",
   "Servicios profesionales",
   "Otro",
-];
+] as const;
 
 const goals = [
   "Conseguir más reseñas en Google",
-  "Tener una página web profesional",
-  "Recibir más consultas por WhatsApp",
-  "Automatizar tareas repetitivas",
-  "Atender clientes automáticamente",
-  "Digitalizar menú / catálogo / información",
+  "Compartir menú, catálogo o enlaces",
+  "Tener presencia profesional en internet",
+  "Recibir y atender consultas por WhatsApp",
+  "Gestionar ventas, reservas, stock o pedidos",
   "No estoy seguro, quiero asesoría",
-];
+] as const;
+
+type BusinessType = (typeof businessTypes)[number];
+type BusinessGoal = (typeof goals)[number];
 
 interface RecommendationInfo {
-  solution: string;
+  primarySolution: string;
   explanation: string;
   badge: string;
+  optionalComplement?: string;
+  advancedCapability?: string;
 }
 
-const recommendationsByGoal: Record<string, RecommendationInfo> = {
+const recommendationsByGoal: Partial<Record<BusinessGoal, RecommendationInfo>> = {
   "Conseguir más reseñas en Google": {
-    solution: "NFC + QR para Google",
+    primarySolution: "NFC + QR",
     explanation:
-      "Tus clientes acercan el celular a la placa o sticker y califican en Google en 5 segundos sin buscar tu negocio manualmente.",
+      "Facilita que tus clientes lleguen a tu perfil de Google con un toque o escaneo y dejen una reseña sin pasos innecesarios.",
     badge: "Reputación rápida",
   },
-  "Tener una página web profesional": {
-    solution: "Landing page / sitio web",
+  "Compartir menú, catálogo o enlaces": {
+    primarySolution: "Smart Links & Menús",
     explanation:
-      "Presencia digital moderna, rápida y persuasiva, diseñada para transmitir confianza inmediata y convertir visitas en clientes.",
-    badge: "Diseño + conversión",
+      "Reúne tu menú, catálogo, redes y canales de contacto en un solo enlace fácil de compartir y actualizar.",
+    badge: "Todo en un enlace",
   },
-  "Recibir más consultas por WhatsApp": {
-    solution: "Web + WhatsApp Business",
+  "Tener presencia profesional en internet": {
+    primarySolution: "Páginas Web",
     explanation:
-      "Estructura comercial pensada para guiar al visitante directo a tu chat con mensajes preconfigurados y listos para atender.",
-    badge: "Captación comercial",
+      "Presenta tu negocio con una experiencia rápida, clara y profesional, diseñada para generar confianza y convertir visitas en oportunidades.",
+    badge: "Presencia que convierte",
   },
-  "Automatizar tareas repetitivas": {
-    solution: "Automatizaciones",
+  "Recibir y atender consultas por WhatsApp": {
+    primarySolution: "WhatsApp & Chatbots",
     explanation:
-      "Conexión de formularios, respuestas, registros y notificaciones para ahorrar horas operativas cada semana.",
-    badge: "Ahorra tiempo",
+      "Ordena la atención, agiliza respuestas frecuentes y crea un camino directo para convertir consultas en clientes.",
+    badge: "Atención más ágil",
+    advancedCapability:
+      "Si el volumen de atención crece, podemos evaluar automatizaciones o IA.",
   },
-  "Atender clientes automáticamente": {
-    solution: "Chatbot / Agente IA",
+  "Gestionar ventas, reservas, stock o pedidos": {
+    primarySolution: "Sistemas para Negocios",
     explanation:
-      "Asistente inteligente disponible 24/7 para responder preguntas frecuentes, calificar prospectos y no perder clientes.",
-    badge: "Atención 24/7",
+      "Centraliza las tareas clave de tu operación en una solución adaptada a la forma real en que trabaja tu negocio.",
+    badge: "Gestión a tu medida",
   },
-  "Digitalizar menú / catálogo / información": {
-    solution: "NFC + QR + solución digital",
-    explanation:
-      "Acceso instantáneo a tu carta, catálogo o datos clave con un solo toque o escaneo desde cualquier smartphone.",
-    badge: "Acceso con un toque",
+};
+
+const uncertainRecommendations: Record<BusinessType, RecommendationInfo> = {
+  "Restaurante / pollería": {
+    primarySolution: "Smart Links & Menús",
+    explanation: "Empieza con una carta digital clara, actualizable y fácil de compartir con tus clientes.",
+    badge: "Inicio recomendado",
   },
-  "No estoy seguro, quiero asesoría": {
-    solution: "Diagnóstico personalizado",
-    explanation:
-      "Analizamos tu negocio paso a paso y te planteamos la ruta digital más simple, rápida y rentable para empezar.",
+  "Cafetería / pastelería": {
+    primarySolution: "Smart Links & Menús",
+    explanation: "Empieza reuniendo tu carta, productos, redes y contacto en un acceso digital fácil de compartir.",
+    badge: "Inicio recomendado",
+  },
+  "Hotel / hospedaje": {
+    primarySolution: "Páginas Web",
+    explanation: "Empieza con una presencia profesional que muestre habitaciones, servicios y canales de reserva con claridad.",
+    badge: "Inicio recomendado",
+  },
+  "Barbería / salón": {
+    primarySolution: "WhatsApp & Chatbots",
+    explanation: "Empieza ordenando consultas y solicitudes de citas para responder con mayor rapidez.",
+    badge: "Inicio recomendado",
+  },
+  "Tienda / retail": {
+    primarySolution: "Smart Links & Menús",
+    explanation: "Empieza mostrando tu catálogo, promociones y canales de compra desde un solo enlace.",
+    badge: "Inicio recomendado",
+  },
+  "Clínica / consultorio": {
+    primarySolution: "WhatsApp & Chatbots",
+    explanation: "Empieza facilitando consultas y solicitudes de citas con una atención más ordenada.",
+    badge: "Inicio recomendado",
+  },
+  "Servicios profesionales": {
+    primarySolution: "Páginas Web",
+    explanation: "Empieza presentando tus servicios, experiencia y formas de contacto con una imagen profesional.",
+    badge: "Inicio recomendado",
+  },
+  Otro: {
+    primarySolution: "Diagnóstico personalizado",
+    explanation: "Revisamos tu operación y definimos la ruta digital más simple y rentable para comenzar.",
     badge: "Asesoría a medida",
   },
 };
+
+const businessContexts: Record<BusinessType, string> = {
+  "Restaurante / pollería": "La propuesta se adapta a la atención en mesa, los pedidos y las visitas recurrentes.",
+  "Cafetería / pastelería": "La propuesta se adapta a productos visuales, cambios de carta y compras recurrentes.",
+  "Hotel / hospedaje": "La propuesta considera consultas, reservas y la confianza previa a la estadía.",
+  "Barbería / salón": "La propuesta considera consultas rápidas, citas y clientes recurrentes.",
+  "Tienda / retail": "La propuesta se adapta a catálogo, promociones y operación comercial.",
+  "Clínica / consultorio": "La propuesta considera una atención clara, ordenada y orientada a citas.",
+  "Servicios profesionales": "La propuesta refuerza la confianza, la presentación del servicio y el contacto comercial.",
+  Otro: "La propuesta se ajustará al flujo y las prioridades reales de tu negocio.",
+};
+
+const complementRules: Partial<Record<`${BusinessType}|${BusinessGoal}`, string>> = {
+  "Restaurante / pollería|Compartir menú, catálogo o enlaces": "NFC + QR",
+  "Cafetería / pastelería|Compartir menú, catálogo o enlaces": "NFC + QR",
+  "Restaurante / pollería|Conseguir más reseñas en Google": "Smart Links & Menús",
+  "Cafetería / pastelería|Conseguir más reseñas en Google": "Smart Links & Menús",
+  "Hotel / hospedaje|Gestionar ventas, reservas, stock o pedidos": "Páginas Web",
+  "Clínica / consultorio|Recibir y atender consultas por WhatsApp": "Sistema de citas",
+  "Tienda / retail|Gestionar ventas, reservas, stock o pedidos": "Smart Links & Menús",
+  "Servicios profesionales|Tener presencia profesional en internet": "WhatsApp & Chatbots",
+};
+
+function getRecommendation(
+  businessType: BusinessType | "",
+  businessGoal: BusinessGoal | ""
+): RecommendationInfo {
+  if (!businessType || !businessGoal) {
+    return uncertainRecommendations.Otro;
+  }
+
+  const baseRecommendation =
+    businessGoal === "No estoy seguro, quiero asesoría"
+      ? uncertainRecommendations[businessType]
+      : recommendationsByGoal[businessGoal] ?? uncertainRecommendations.Otro;
+  const optionalComplement = complementRules[`${businessType}|${businessGoal}`];
+
+  return {
+    ...baseRecommendation,
+    explanation: `${baseRecommendation.explanation} ${businessContexts[businessType]}`,
+    optionalComplement,
+  };
+}
 
 interface CaseItem {
   name: string;
@@ -321,27 +401,36 @@ function buildQuoteWhatsAppUrl() {
 function buildConfigWhatsAppUrl(
   businessType: string,
   businessGoal: string,
-  solution: string
+  primarySolution: string,
+  optionalComplement?: string
 ) {
   const biz = businessType || "mi negocio";
   const g = businessGoal || "crecer";
-  const sol = solution || "soluciones digitales";
+  const solution = primarySolution || "soluciones digitales";
 
   const message = [
     "Hola IMPULSATECH",
     "",
     `Tengo un negocio de ${biz}.`,
     "",
-    "Mi objetivo es:",
+    "Quiero mejorar:",
     g,
     "",
     "La web me recomendó:",
-    sol,
-    "",
-    "Quisiera recibir más información y una cotización.",
-  ].join("\n");
+    `${solution}.`,
+  ];
 
-  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+  if (optionalComplement) {
+    message.push(
+      "",
+      "También podría complementarlo con:",
+      `${optionalComplement}.`
+    );
+  }
+
+  message.push("", "Quisiera recibir más información y una cotización.");
+
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message.join("\n"))}`;
 }
 
 function buildFloatingWhatsAppUrl() {
@@ -370,33 +459,25 @@ export default function Home() {
   const [heroIndex, setHeroIndex] = useState(0);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [configStep, setConfigStep] = useState(1);
-  const [business, setBusiness] = useState("");
-  const [goal, setGoal] = useState("");
-  const [recommendedSolution, setRecommendedSolution] = useState(
-    "NFC + QR para Google"
-  );
+  const [business, setBusiness] = useState<BusinessType | "">("");
+  const [goal, setGoal] = useState<BusinessGoal | "">("");
   const [submitted, setSubmitted] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
   const servicesRef = useRef<HTMLDivElement>(null);
 
-  const activeRecommendation = useMemo(() => {
-    if (goal && recommendationsByGoal[goal]) {
-      return recommendationsByGoal[goal];
-    }
-    return recommendationsByGoal["Conseguir más reseñas en Google"];
-  }, [goal]);
+  const activeRecommendation = useMemo(
+    () => getRecommendation(business, goal),
+    [business, goal]
+  );
 
-  const handleSelectBusiness = (item: string) => {
+  const handleSelectBusiness = (item: BusinessType) => {
     setBusiness(item);
+    setGoal("");
     setConfigStep(2);
   };
 
-  const handleSelectGoal = (item: string) => {
+  const handleSelectGoal = (item: BusinessGoal) => {
     setGoal(item);
-    const rec = recommendationsByGoal[item];
-    if (rec) {
-      setRecommendedSolution(rec.solution);
-    }
     setConfigStep(3);
   };
 
@@ -707,17 +788,6 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-                {business && (
-                  <div className="config-step-actions">
-                    <button
-                      type="button"
-                      className="btn btn-primary config-continue-btn"
-                      onClick={() => setConfigStep(2)}
-                    >
-                      Continuar <Icon name="arrow" size={16} />
-                    </button>
-                  </div>
-                )}
               </div>
             )}
 
@@ -749,17 +819,6 @@ export default function Home() {
                     </button>
                   ))}
                 </div>
-                {goal && (
-                  <div className="config-step-actions">
-                    <button
-                      type="button"
-                      className="btn btn-primary config-continue-btn"
-                      onClick={() => setConfigStep(3)}
-                    >
-                      Ver recomendación <Icon name="arrow" size={16} />
-                    </button>
-                  </div>
-                )}
               </div>
             )}
 
@@ -785,24 +844,36 @@ export default function Home() {
                     <span className="rec-badge">
                       <Icon name="spark" size={14} /> Solución sugerida
                     </span>
-                    {activeRecommendation?.badge && (
+                    {activeRecommendation.badge && (
                       <span className="rec-highlight-tag">
                         {activeRecommendation.badge}
                       </span>
                     )}
                   </div>
 
-                  <h4 className="rec-title">
-                    {activeRecommendation?.solution || recommendedSolution}
-                  </h4>
-                  <p className="rec-desc">{activeRecommendation?.explanation}</p>
+                  <h4 className="rec-title">{activeRecommendation.primarySolution}</h4>
+                  <p className="rec-desc">{activeRecommendation.explanation}</p>
+
+                  {activeRecommendation.optionalComplement && (
+                    <p className="rec-complement">
+                      <span>También podrías complementarlo con:</span>
+                      <strong>{activeRecommendation.optionalComplement}</strong>
+                    </p>
+                  )}
+
+                  {activeRecommendation.advancedCapability && (
+                    <p className="rec-advanced">
+                      {activeRecommendation.advancedCapability}
+                    </p>
+                  )}
 
                   <div className="rec-actions">
                     <a
                       href={buildConfigWhatsAppUrl(
                         business,
                         goal,
-                        activeRecommendation?.solution || recommendedSolution
+                        activeRecommendation.primarySolution,
+                        activeRecommendation.optionalComplement
                       )}
                       target="_blank"
                       rel="noopener noreferrer"
