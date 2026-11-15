@@ -1,0 +1,3 @@
+interface:
+  display_name: "Pre Commit Review"
+  short_description: "Audita cambios antes de commit y detecta scope creep, errores, artefactos y secretos."
