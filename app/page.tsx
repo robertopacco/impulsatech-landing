@@ -453,6 +453,20 @@ function buildFloatingWhatsAppUrl() {
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
 }
 
+function buildContactWhatsAppUrl() {
+  const message = [
+    "Hola IMPULSATECH 👋",
+    "",
+    "Quisiera recibir información sobre sus soluciones para negocios.",
+    "",
+    "Mi negocio es:",
+    "",
+    "Quisiera conversar sobre:",
+  ].join("\n");
+
+  return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(message)}`;
+}
+
 function buildServiceWhatsAppUrl(waMessage: string) {
   return `https://wa.me/${WA_PHONE}?text=${encodeURIComponent(waMessage)}`;
 }
@@ -472,7 +486,6 @@ export default function Home() {
   const [configStep, setConfigStep] = useState(1);
   const [business, setBusiness] = useState<BusinessType | "">("");
   const [goal, setGoal] = useState<BusinessGoal | "">("");
-  const [submitted, setSubmitted] = useState(false);
   const [serviceIndex, setServiceIndex] = useState(0);
   const servicesRef = useRef<HTMLDivElement>(null);
 
@@ -621,6 +634,7 @@ export default function Home() {
             <a href="#servicios" onClick={() => setMobileOpen(false)}>Servicios</a>
             <a href="#como-funciona" onClick={() => setMobileOpen(false)}>Cómo funciona</a>
             <a href="#casos" onClick={() => setMobileOpen(false)}>Casos reales</a>
+            <a href="#contacto" onClick={() => setMobileOpen(false)}>Contacto</a>
             <a
               href={buildQuoteWhatsAppUrl()}
               target="_blank"
@@ -1156,44 +1170,69 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="contact-section" id="contacto">
+      <section className="contact-section" id="contacto" aria-labelledby="contact-title">
         <div className="shell contact-grid">
           <div className="contact-copy">
-            <div className="kicker light">HABLEMOS</div>
-            <h2>¿Listo para impulsar<br/>tu negocio?</h2>
-            <p>Cuéntanos qué quieres mejorar. Te respondemos con una propuesta clara, sin vueltas y aterrizada a tu realidad.</p>
-            <div className="contact-features"><span><Icon name="check" size={16}/> Diagnóstico inicial</span><span><Icon name="check" size={16}/> Propuesta a medida</span><span><Icon name="check" size={16}/> Implementación acompañada</span></div>
+            <div className="kicker light">EL SIGUIENTE PASO</div>
+            <h2 id="contact-title">Hablemos de lo que necesita <span>tu negocio.</span></h2>
+            <p>Cuéntanos qué quieres mejorar y te ayudamos a encontrar una solución simple y adecuada para tu negocio.</p>
+            <ul className="contact-coverage" aria-label="Cobertura de atención">
+              <li><Icon name="pin" size={18}/><span><strong>Atención presencial</strong> en Ica</span></li>
+              <li><WhatsAppIcon size={18}/><span><strong>Atención por WhatsApp</strong> para todo el Perú</span></li>
+            </ul>
           </div>
-          <form className="contact-form" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
-            {submitted ? (
-              <div className="success-state"><span><Icon name="check" size={30}/></span><h3>Mensaje preparado.</h3><p>En la versión publicada conectaremos este formulario con WhatsApp, correo o tu CRM.</p><button type="button" className="btn btn-primary" onClick={() => setSubmitted(false)}>Enviar otro</button></div>
-            ) : (
-              <>
-                <label>Nombre<input required placeholder="Tu nombre" /></label>
-                <label>Negocio<input required placeholder="Nombre de tu negocio" /></label>
-                <label>¿Qué necesitas?<select defaultValue=""><option value="" disabled>Selecciona una opción</option>{services.map((s) => <option key={s.title}>{s.title}</option>)}</select></label>
-                <label>Cuéntanos brevemente<textarea rows={4} placeholder="Ej. Quiero conseguir más reseñas y recibir consultas por WhatsApp..." /></label>
-                <button className="btn btn-primary full" type="submit">Quiero una propuesta <Icon name="arrow" size={18}/></button>
-                <small className="form-note">Sin spam. Tus datos solo se usarán para responder tu consulta.</small>
-              </>
-            )}
-          </form>
+          <div className="contact-action">
+            <span className="contact-action-icon" aria-hidden="true"><WhatsAppIcon size={28}/></span>
+            <p className="contact-action-label">CONVERSEMOS POR WHATSAPP</p>
+            <h3>Cuéntanos qué necesita tu negocio.</h3>
+            <p>Te orientamos personalmente para definir una opción clara, útil y acorde a tu realidad.</p>
+            <a
+              href={buildContactWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-whatsapp-cta"
+              aria-label="Hablar con IMPULSATECH por WhatsApp"
+            >
+              <WhatsAppIcon size={22}/>
+              <span>Hablar por WhatsApp</span>
+              <Icon name="arrow" size={18}/>
+            </a>
+            <small>Se abrirá WhatsApp con un mensaje listo para completar.</small>
+          </div>
         </div>
       </section>
 
-      <footer>
+      <footer className="site-footer">
         <div className="shell footer-grid">
-          <div><FooterBrand/><p>Tecnología práctica para negocios que quieren crecer.</p></div>
-          <div className="footer-links">
-            <a href="#servicios">Servicios</a>
-            <a href="#como-funciona">Proceso</a>
-            <a href="#casos">Casos</a>
-            <a href="#contacto">Contacto</a>
-            <a href="https://www.instagram.com/impulsatech.pee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de IMPULSATECH">Instagram</a>
-            <a href="https://www.facebook.com/profile.php?id=61594748236941" target="_blank" rel="noopener noreferrer" aria-label="Facebook de IMPULSATECH">Facebook</a>
-            <a href="https://www.tiktok.com/@impulsatech.pe" target="_blank" rel="noopener noreferrer" aria-label="TikTok de IMPULSATECH">TikTok</a>
+          <div className="footer-brand-block">
+            <FooterBrand/>
+            <p>Tecnología práctica para hacer más simple la forma en que tu negocio se presenta, atiende y crece.</p>
           </div>
-          <div className="footer-note"><span>© 2026 IMPULSATECH</span><span>Atención presencial en Ica y por WhatsApp para todo el Perú</span></div>
+          <nav className="footer-group" aria-label="Navegación del pie de página">
+            <h2>Navegación</h2>
+            <div className="footer-links">
+              <a href="#servicios">Servicios</a>
+              <a href="#como-funciona">Cómo funciona</a>
+              <a href="#casos">Casos reales</a>
+              <a href="#contacto">Contacto</a>
+            </div>
+          </nav>
+          <div className="footer-group">
+            <h2>Redes</h2>
+            <div className="footer-links footer-socials">
+              <a href="https://www.instagram.com/impulsatech.pee/" target="_blank" rel="noopener noreferrer" aria-label="Instagram de IMPULSATECH">Instagram</a>
+              <a href="https://www.facebook.com/profile.php?id=61594748236941" target="_blank" rel="noopener noreferrer" aria-label="Facebook de IMPULSATECH">Facebook</a>
+              <a href="https://www.tiktok.com/@impulsatech.pe" target="_blank" rel="noopener noreferrer" aria-label="TikTok de IMPULSATECH">TikTok</a>
+            </div>
+          </div>
+          <div className="footer-group footer-coverage">
+            <h2>Cobertura</h2>
+            <p>Atención presencial en Ica y por WhatsApp para todo el Perú.</p>
+          </div>
+        </div>
+        <div className="shell footer-bottom">
+          <span>© 2026 IMPULSATECH</span>
+          <span>Soluciones digitales para negocios.</span>
         </div>
       </footer>
 
