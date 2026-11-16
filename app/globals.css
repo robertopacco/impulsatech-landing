@@ -966,40 +966,39 @@ button { cursor: pointer; }
 }
 /* SECCIÓN DE CONFIANZA */
 .trust-section {
-  padding: 20px 0 110px;
+  padding: 24px 0 120px;
   background: #eff0ed;
 }
 
 .trust-card {
-  background: #0b0f16;
-  color: white;
-  border-radius: 28px;
-  padding: 52px 48px;
-  border: 1px solid rgba(255, 255, 255, .08);
-  box-shadow: 0 24px 60px rgba(0, 0, 0, .22);
   position: relative;
   overflow: hidden;
   display: grid;
-  grid-template-columns: minmax(0, 1.18fr) minmax(0, 0.82fr);
-  gap: 52px;
-  align-items: center;
+  grid-template-columns: minmax(320px, .82fr) minmax(0, 1.18fr);
+  min-width: 0;
+  border: 1px solid rgba(7, 17, 27, .1);
+  border-radius: 30px;
+  background: #ffffff;
+  box-shadow: 0 24px 64px rgba(7, 17, 27, .1);
 }
 
 .trust-card::before {
   content: "";
   position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  right: -50px;
-  top: -50px;
-  background: radial-gradient(circle, rgba(0, 207, 240, .12), transparent 70%);
+  top: 0;
+  right: 0;
+  width: 180px;
+  height: 3px;
+  background: linear-gradient(90deg, #0064E8, #00CFF0);
   pointer-events: none;
 }
 
 .trust-info-col {
+  min-width: 0;
+  padding: 64px clamp(42px, 5vw, 72px);
   display: flex;
   flex-direction: column;
+  justify-content: center;
   position: relative;
   z-index: 2;
 }
@@ -1012,101 +1011,113 @@ button { cursor: pointer; }
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--brand-cyan);
+  color: #0064E8;
 }
 
 .trust-card h2 {
-  margin: 14px 0 0;
-  font-size: clamp(30px, 3.8vw, 42px);
-  line-height: 1.1;
-  letter-spacing: -.045em;
-  color: white;
+  max-width: 620px;
+  margin: 16px 0 0;
+  font-size: clamp(36px, 4.1vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -.052em;
+  color: #07111B;
   font-weight: 750;
 }
 
 .trust-text {
-  margin: 16px 0 0;
-  max-width: 520px;
-  color: rgba(255, 255, 255, .82);
-  font-size: 15.5px;
-  line-height: 1.65;
+  max-width: 610px;
+  margin: 14px 0 0;
+  color: rgba(7, 17, 27, .7);
+  font-size: 15px;
+  line-height: 1.68;
 }
 
-.trust-location-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
+.trust-text--lead {
   margin-top: 24px;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid rgba(255, 255, 255, .12);
-  font-size: 13px;
-  color: rgba(255, 255, 255, .9);
-  align-self: flex-start;
+  color: #07111B;
+  font-size: 17px;
+  line-height: 1.62;
 }
 
-.trust-location-tag svg {
-  color: var(--brand-cyan);
+.trust-points {
+  margin: 30px 0 0;
+  padding: 0;
+  border-top: 1px solid rgba(7, 17, 27, .1);
+  list-style: none;
+}
+
+.trust-points li {
+  min-height: 48px;
+  padding: 12px 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(7, 17, 27, .1);
+  color: #07111B;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.trust-points svg {
+  width: 26px;
+  height: 26px;
+  padding: 5px;
+  border-radius: 50%;
+  background: rgba(0, 143, 240, .1);
+  color: #0064E8;
   flex-shrink: 0;
 }
 
-.trust-signature {
-  margin-top: 32px;
-  padding-top: 24px;
-  border-top: 1px solid rgba(255, 255, 255, .1);
+.trust-location-note {
+  margin-top: 22px;
   display: flex;
-  flex-direction: column;
-  gap: 4px;
+  align-items: flex-start;
+  gap: 9px;
+  color: rgba(7, 17, 27, .62);
+  font-size: 12.5px;
+  line-height: 1.5;
 }
 
-.trust-signature strong {
-  display: block;
-  font-size: 16px;
-  font-weight: 750;
-  color: white;
-  letter-spacing: -.01em;
-}
-
-.trust-signature span {
-  display: block;
-  font-size: 13px;
-  color: var(--brand-cyan);
-  font-weight: 550;
+.trust-location-note svg {
+  margin-top: 1px;
+  color: #008FF0;
+  flex-shrink: 0;
 }
 
 /* FOTOGRAFÍA PROFESIONAL ROBERTO PACCO */
 .trust-photo-col {
+  min-width: 0;
+  margin: 0;
+  padding: 32px;
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #07111B;
 }
 
 .trust-photo-col::before {
   content: "";
   position: absolute;
-  width: 280px;
-  height: 280px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 207, 240, 0.14), transparent 70%);
-  filter: blur(28px);
+  inset: 0;
+  background: radial-gradient(circle at 50% 22%, rgba(0, 207, 240, .15), transparent 45%);
   pointer-events: none;
 }
 
 .trust-photo-frame {
   position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 360px;
+  max-width: 380px;
   aspect-ratio: 794 / 1007;
-  border-radius: 20px;
   overflow: hidden;
-  border: 1px solid rgba(0, 207, 240, 0.22);
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.45), 0 0 24px rgba(0, 207, 240, 0.08);
-  background: #070a10;
   display: flex;
+  border: 1px solid rgba(0, 207, 240, .28);
+  border-radius: 20px;
+  background: #07111B;
+  box-shadow: 0 20px 44px rgba(7, 17, 27, .35);
 }
 
 .trust-photo-img {
@@ -1115,6 +1126,31 @@ button { cursor: pointer; }
   object-fit: cover;
   object-position: center center;
   display: block;
+}
+
+.trust-signature {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 380px);
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.trust-signature strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 750;
+  color: #ffffff;
+  letter-spacing: -.02em;
+}
+
+.trust-signature span {
+  display: block;
+  font-size: 13px;
+  color: #00CFF0;
+  font-weight: 600;
 }
 
 /* CONTACTO */
@@ -1195,8 +1231,10 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
   .services-track { grid-template-columns: repeat(3,1fr); }
   .inside-grid, .contact-grid { gap: 50px; }
   .system-visual { transform: scale(.9); transform-origin: center; }
-  .trust-card { gap: 36px; padding: 42px 36px; }
-  .trust-photo-frame { max-width: 320px; }
+  .trust-card { grid-template-columns: minmax(300px, .86fr) minmax(0, 1.14fr); }
+  .trust-info-col { padding: 52px 38px; }
+  .trust-photo-col { padding: 28px; }
+  .trust-photo-frame { max-width: 340px; }
 }
 
 /* RESPONSIVE MOBILE / SMALL TABLET (<= 820px) */
@@ -1477,54 +1515,26 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
 
   /* CONFIANZA MOBILE */
   .trust-card {
-    display: flex;
-    flex-direction: column;
-    padding: 36px 26px;
+    grid-template-columns: 1fr;
     border-radius: 24px;
-    gap: 0;
   }
   .trust-info-col {
-    display: contents;
-  }
-  .trust-badge {
-    order: 1;
-    align-self: flex-start;
+    padding: 38px 34px 42px;
   }
   .trust-card h2 {
-    order: 2;
-    margin-top: 14px;
     font-size: clamp(26px, 6.5vw, 36px);
   }
-  .trust-text {
-    order: 3;
-    margin-top: 14px;
-    font-size: 15px;
-    max-width: 100%;
-  }
   .trust-photo-col {
-    order: 4;
-    margin: 24px 0 22px;
-    width: 100%;
+    padding: 28px 28px 26px;
   }
   .trust-photo-frame {
     width: 100%;
-    max-width: 320px;
+    max-width: 340px;
     margin: 0 auto;
     border-radius: 18px;
   }
-  .trust-location-tag {
-    order: 5;
-    margin-top: 0;
-    margin-bottom: 24px;
-    font-size: 12.5px;
-    line-height: 1.45;
-    align-self: flex-start;
-  }
   .trust-signature {
-    order: 6;
-    margin-top: 0;
-    padding-top: 20px;
-    width: 100%;
+    width: min(100%, 340px);
   }
 
   .footer-grid { grid-template-columns: 1fr; align-items: start; }
@@ -1774,13 +1784,18 @@ footer { background: #080b10; color: white; border-top: 1px solid rgba(255,255,2
   .case-photo figcaption { right: 12px; bottom: 12px; left: 12px; max-width: calc(100% - 24px); }
 
   .trust-section { padding: 10px 0 65px; }
-  .trust-card { padding: 26px 18px; border-radius: 22px; }
-  .trust-card h2 { font-size: clamp(23px, 6.8vw, 29px); }
-  .trust-text { font-size: 14px; line-height: 1.55; }
-  .trust-photo-col { margin: 20px 0; }
-  .trust-photo-frame { width: 100%; max-width: 290px; border-radius: 16px; }
-  .trust-location-tag { font-size: 12px; padding: 8px 12px; gap: 6px; margin-bottom: 20px; }
-  .trust-signature { margin-top: 0; padding-top: 18px; }
+  .trust-card { border-radius: 22px; }
+  .trust-photo-col { padding: 18px 18px 21px; }
+  .trust-photo-frame { width: 100%; max-width: 280px; border-radius: 16px; }
+  .trust-signature { width: min(100%, 280px); margin-top: 16px; }
+  .trust-signature strong { font-size: 17px; }
+  .trust-info-col { padding: 30px 20px 34px; }
+  .trust-card h2 { font-size: clamp(28px, 8.1vw, 34px); }
+  .trust-text { font-size: 14px; line-height: 1.6; }
+  .trust-text--lead { margin-top: 20px; font-size: 15px; }
+  .trust-points { margin-top: 25px; }
+  .trust-points li { font-size: 13.5px; }
+  .trust-location-note { margin-top: 19px; font-size: 12px; }
 
   .contact-form { padding: 22px 18px; gap: 14px; }
   .btn.full { min-height: 48px; font-size: 14px; }

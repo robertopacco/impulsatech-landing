@@ -1110,38 +1110,46 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="trust-section">
+      <section className="trust-section" aria-labelledby="trust-title">
         <div className="shell">
           <div className="trust-card">
-            <div className="trust-info-col">
-              <div className="trust-badge">
-                <Icon name="shield" size={15} /> CONFIANZA LOCAL
-              </div>
-              <h2>Tecnología con atención humana.</h2>
-              <p className="trust-text">
-                IMPULSATECH nace en Ica para ayudar a negocios a aprovechar herramientas digitales de forma simple, práctica y cercana.
-              </p>
-              <div className="trust-location-tag">
-                <Icon name="pin" size={15} />
-                <span>Atención presencial en Ica y atención por WhatsApp para todo el Perú.</span>
-              </div>
-              <div className="trust-signature">
-                <strong>Roberto Pacco</strong>
-                <span>Fundador · Ingeniero de Sistemas</span>
-              </div>
-            </div>
-
-            <div className="trust-photo-col">
+            <figure className="trust-photo-col">
               <div className="trust-photo-frame">
                 <Image
                   src="/marca/roberto-pacco-titulo.jpg"
-                  alt="Roberto Pacco - Fundador e Ingeniero de Sistemas de IMPULSATECH"
+                  alt="Roberto Pacco sosteniendo su título profesional de Ingeniero de Sistemas"
                   width={794}
                   height={1007}
                   className="trust-photo-img"
-                  sizes="(max-width: 820px) 90vw, 380px"
+                  sizes="(max-width: 560px) 280px, (max-width: 820px) 340px, 380px"
                   priority={false}
                 />
+              </div>
+              <figcaption className="trust-signature">
+                <strong>Roberto Pacco</strong>
+                <span>Fundador · Ingeniero de Sistemas</span>
+              </figcaption>
+            </figure>
+
+            <div className="trust-info-col">
+              <div className="trust-badge">
+                <Icon name="shield" size={15} /> TRATO DIRECTO
+              </div>
+              <h2 id="trust-title">Tecnología con una persona real detrás.</h2>
+              <p className="trust-text trust-text--lead">
+                En IMPULSATECH trabajamos directamente contigo para entender qué necesita tu negocio y convertirlo en una solución práctica, clara y fácil de usar.
+              </p>
+              <p className="trust-text">
+                Desde la idea hasta la implementación, tienes acompañamiento directo para resolver dudas, hacer ajustes y seguir mejorando.
+              </p>
+              <ul className="trust-points" aria-label="Compromisos de atención">
+                <li><Icon name="check" size={16} /><span>Atención directa</span></li>
+                <li><Icon name="check" size={16} /><span>Soluciones adaptadas al negocio</span></li>
+                <li><Icon name="check" size={16} /><span>Acompañamiento después de la entrega</span></li>
+              </ul>
+              <div className="trust-location-note">
+                <Icon name="pin" size={16} />
+                <span>Atención presencial en Ica y por WhatsApp para todo el Perú.</span>
               </div>
             </div>
           </div>
