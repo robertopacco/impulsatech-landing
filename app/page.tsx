@@ -306,39 +306,50 @@ interface CaseItem {
   name: string;
   category: string;
   solution: string;
-  headerCard: string;
-  headerAlt: string;
+  description: string;
+  logo: string;
+  logoAlt: string;
   photo: string;
   photoAlt: string;
+  photoPosition: string;
+  photoModifier?: "pastelarte" | "misky";
 }
 
 const cases: CaseItem[] = [
   {
     name: "Pastelarte Coffee Cat",
     category: "Cafetería · Ica",
-    solution: "Tarjeta NFC para facilitar reseñas en Google.",
-    headerCard: "/casos/logos/pastelarte-logo-card.png",
-    headerAlt: "Cabecera de Pastelarte Coffee Cat",
+    solution: "Tarjeta NFC para reseñas en Google",
+    description: "Configuramos una tarjeta NFC personalizada para que sus clientes accedan con un toque a su perfil de Google y puedan dejar una reseña.",
+    logo: "/casos/logos/pastelarte-logo-real.png",
+    logoAlt: "Logo de Pastelarte Coffee Cat",
     photo: "/casos/pastelarte/pastelarte-propietario-real.webp",
-    photoAlt: "Entrega real de tarjeta NFC en Pastelarte Coffee Cat",
+    photoAlt: "Propietario de Pastelarte Coffee Cat mostrando su tarjeta NFC para reseñas de Google",
+    photoPosition: "center 38%",
+    photoModifier: "pastelarte",
   },
   {
     name: "Pollería Misky",
     category: "Restaurante · Ica",
-    solution: "QR A4 + NFC para facilitar el acceso a reseñas de Google.",
-    headerCard: "/casos/logos/misky-logo-card.png",
-    headerAlt: "Cabecera de Pollería Misky",
+    solution: "Soporte QR A4 + NFC para reseñas en Google",
+    description: "Implementamos un soporte visible en el local que combina QR y NFC para facilitar a sus clientes el acceso a las reseñas de Google.",
+    logo: "/casos/logos/misky-logo-real.png",
+    logoAlt: "Logo de Pollería Misky",
     photo: "/casos/misky/misky-propietaria-real.webp",
-    photoAlt: "Entrega real de soporte QR A4 y NFC en Pollería Misky",
+    photoAlt: "Propietaria de Pollería Misky usando el soporte QR y NFC implementado en su local",
+    photoPosition: "center 42%",
+    photoModifier: "misky",
   },
   {
     name: "El Sol de Luren",
     category: "Hospedaje · Ica",
-    solution: "Tarjeta / banner NFC personalizado para facilitar reseñas de Google.",
-    headerCard: "/casos/logos/sol-de-luren-logo-card.png",
-    headerAlt: "Cabecera de Hospedaje El Sol de Luren",
+    solution: "Tarjeta y banner NFC para reseñas en Google",
+    description: "Preparamos una solución NFC personalizada para que sus huéspedes accedan rápidamente al perfil del hospedaje y compartan su experiencia en Google.",
+    logo: "/casos/logos/sol-de-luren-logo-real.png",
+    logoAlt: "Logo del hospedaje El Sol de Luren",
     photo: "/casos/hospedaje-sol-luren/hospedaje-sol-luren-propietario-real.webp",
-    photoAlt: "Entrega real de solución NFC en Hospedaje El Sol de Luren",
+    photoAlt: "Propietario del hospedaje El Sol de Luren mostrando su solución NFC frente al local",
+    photoPosition: "center 58%",
   },
 ];
 function HeaderBrand() {
@@ -1035,55 +1046,64 @@ export default function Home() {
       <section className="cases-section" id="casos">
         <div className="shell">
           <div className="section-heading split-heading case-heading">
-            <div><div className="kicker">CASOS REALES</div><h2>Hecho para negocios<br/><span>de verdad.</span></h2></div>
-            <p>Soluciones aplicadas a negocios locales para facilitar reseñas en Google y conectar con sus clientes.</p>
+            <div>
+              <div className="kicker">CASOS REALES</div>
+              <h2>Soluciones que ya están funcionando en <span>negocios reales.</span></h2>
+            </div>
+            <p>Negocios de Ica que ya utilizan soluciones de IMPULSATECH para mejorar su presencia digital y facilitar la experiencia de sus clientes.</p>
           </div>
-          <div className="cases-grid">
-            {cases.map((item) => (
-              <article key={item.name} className="case-card">
-                {/* CABECERA SUPERIOR */}
-                <div className="case-header-card">
-                  <Image
-                    src={item.headerCard}
-                    alt={item.headerAlt}
-                    fill
-                    sizes="(max-width: 820px) 100vw, 380px"
-                    className="case-header-img"
-                    style={{ objectFit: "cover", objectPosition: "center" }}
-                    loading="lazy"
-                  />
-                </div>
-
-                {/* BODY */}
-                <div className="case-body">
-                  <small>{item.category}</small>
-                  <h3>{item.name}</h3>
-                  <p className="case-solution">{item.solution}</p>
-
-                  {/* FOTO REAL PROPIETARIO / ENTREGA */}
-                  <div className="case-photo-wrapper">
+          <div className="cases-list">
+            {cases.map((item, index) => (
+              <article
+                key={item.name}
+                className={`case-study${index % 2 === 1 ? " case-study--reverse" : ""}`}
+              >
+                <div className="case-info">
+                  <div className="case-meta-row">
+                    <span className="case-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="case-implemented">Implementado por IMPULSATECH</span>
+                  </div>
+                  <div className="case-logo-frame">
                     <Image
-                      src={item.photo}
-                      alt={item.photoAlt}
-                      fill
-                      sizes="(max-width: 820px) 90vw, 380px"
-                      style={{ objectFit: "contain", objectPosition: "center" }}
+                      src={item.logo}
+                      alt={item.logoAlt}
+                      width={160}
+                      height={120}
+                      className="case-logo"
                       loading="lazy"
                     />
                   </div>
-
-                  {/* CTA */}
+                  <p className="case-category">{item.category}</p>
+                  <h3>{item.name}</h3>
+                  <div className="case-solution-block">
+                    <span>Solución implementada</span>
+                    <strong>{item.solution}</strong>
+                  </div>
+                  <p className="case-description">{item.description}</p>
                   <a
                     href={buildCaseWhatsAppUrl(item.name)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="case-cta-btn"
-                    aria-label={`Quiero algo similar a ${item.name} por WhatsApp`}
+                    className="case-cta-link"
+                    aria-label={`Quiero una solución similar a la de ${item.name} por WhatsApp`}
                   >
-                    <span>Quiero algo similar</span>
+                    <span>Quiero una solución similar</span>
                     <Icon name="arrow" size={16} />
                   </a>
                 </div>
+
+                <figure className={`case-photo${item.photoModifier ? ` case-photo--${item.photoModifier}` : ""}`}>
+                  <Image
+                    src={item.photo}
+                    alt={item.photoAlt}
+                    fill
+                    sizes="(max-width: 820px) calc(100vw - 32px), 650px"
+                    className="case-photo-img"
+                    style={{ objectPosition: item.photoPosition }}
+                    loading="lazy"
+                  />
+                  <figcaption>Implementación real en {item.name}, Ica.</figcaption>
+                </figure>
               </article>
             ))}
           </div>
